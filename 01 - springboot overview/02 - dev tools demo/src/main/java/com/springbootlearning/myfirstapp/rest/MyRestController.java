@@ -18,4 +18,9 @@ public class MyRestController {
     public String secret() {
         return "you found the secret!";
     }
+
+    @GetMapping("/newsecret")
+    public String newSecret() {
+        return "you found the new secret!";
+    }
 }
