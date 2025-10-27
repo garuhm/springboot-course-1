@@ -4,36 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7760b72c-1e36-410a-86ad-5d23833f929e" name="Changes" comment="01-02 start">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/springboot-course-1.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/src/main/java/com/luv2code/springboot/demo/myfirstapp/MyfirstappApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/src/main/java/com/luv2code/springboot/demo/myfirstapp/rest/MyRestController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/01 - springboot demo/src/test/java/com/luv2code/springboot/demo/myfirstapp/MyfirstappApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/src/main/java/com/luv2code/springboot/demo/myfirstapp/MyfirstappApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/src/main/java/com/luv2code/springboot/demo/myfirstapp/rest/MyRestController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/01 - springboot overview/02 - dev tools demo/src/test/java/com/luv2code/springboot/demo/myfirstapp/MyfirstappApplicationTests.java" beforeDir="false" />
-    </list>
+    <list default="true" id="7760b72c-1e36-410a-86ad-5d23833f929e" name="Changes" comment="01-02 start" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
