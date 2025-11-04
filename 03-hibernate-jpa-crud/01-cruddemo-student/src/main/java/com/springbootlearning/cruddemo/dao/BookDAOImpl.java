@@ -20,4 +20,9 @@ public class BookDAOImpl implements BookDAO{
     public void save(Book book) {
         manager.persist(book);
     }
+
+    @Override
+    public Book findByid(Integer id) {
+        return manager.find(Book.class, id);
+    }
 }
