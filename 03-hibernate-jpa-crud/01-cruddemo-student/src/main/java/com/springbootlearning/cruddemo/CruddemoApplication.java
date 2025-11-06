@@ -34,8 +34,21 @@ public class CruddemoApplication {
 //            findAllStudents(studentDAO);
 //            findStudentByLastName(studentDAO);
 //            findAllBooks(bookDAO);
-            findBookByTitle(bookDAO);
+//            findBookByTitle(bookDAO);
+
+            updateStudent(studentDAO);
         };
+    }
+    // UPDATE
+    private void updateStudent(StudentDAO studentDAO){
+        System.out.println("finding...");
+        Student student = studentDAO.findById(3);
+        System.out.println("setting value...");
+        student.setLastName("Thien Ma");
+        System.out.println("updating....");
+        studentDAO.update(student);
+        System.out.println("updated in db!");
+        System.out.println(student.toString());
     }
 
     //READ
@@ -102,7 +115,7 @@ public class CruddemoApplication {
 
     //CREATE
     private void createBook(BookDAO bookDAO) {
-        Book book = new Book("Pride and Prejudice", "Jane Austen", 279);
+        Book book = new Book("My book", "Me", 200);
         System.out.println("Saving book...");
 
         bookDAO.save(book);
