@@ -10,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class CruddemoApplication {
 
@@ -27,11 +29,44 @@ public class CruddemoApplication {
 //            createMultipleBooks(bookDAO);
 
 //            readStudent(studentDAO);
-            readBook(bookDAO);
+//            readBook(bookDAO);
+
+//            findAllStudents(studentDAO);
+//            findStudentByLastName(studentDAO);
+//            findAllBooks(bookDAO);
+            findBookByTitle(bookDAO);
         };
     }
 
-    //UPDATE
+    //READ
+    private void findBookByTitle(BookDAO bookDAO){
+        List<Book> books = bookDAO.findByTitle("1984");
+        for(Book book: books){
+            System.out.println(book.toString());
+        }
+    }
+
+    private void findAllBooks(BookDAO bookDAO){
+        List<Book> books = bookDAO.findAll();
+        for(Book book: books){
+            System.out.println(book.toString());
+        }
+    }
+
+    private void findStudentByLastName(StudentDAO studentDAO){
+        List<Student> students = studentDAO.findByLastName("Ruh");
+        for(Student student : students){
+            System.out.println(student.toString());
+        }
+    }
+
+    private void findAllStudents(StudentDAO studentDAO){
+        List<Student> students = studentDAO.findAll();
+        for(Student student : students){
+            System.out.println(student.toString());
+        }
+    }
+
     private void readStudent(StudentDAO studentDAO) {
         System.out.println("creating...");
         Student student = new Student("Miyako", "Glemser", "mglemser@gmail.com");
