@@ -2,6 +2,7 @@ package com.springbootlearning.cruddemo.dao;
 
 import com.springbootlearning.cruddemo.entity.Student;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,21 @@ public class StudentDAOImpl implements StudentDAO{
     @Transactional
     public void update(Student student) {
         manager.merge(student);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Integer id) {
+        Student student = findById(id);
+        manager.remove(student);
+    }
+
+    @Override
+    @Transactional
+    public int deleteWithFirstName(String firstName) {
+        // query, not typed query, bc this doesn't need a type specified unlike the other ones
+        Query query = manager.createQuery("DELETE FROM Student WHERE firstName=:firstName");
+        query.setParameter("firstName", firstName);
+        return query.executeUpdate();
     }
 }

@@ -31,15 +31,31 @@ public class CruddemoApplication {
 //            readStudent(studentDAO);
 //            readBook(bookDAO);
 
-//            findAllStudents(studentDAO);
+            findAllStudents(studentDAO);
 //            findStudentByLastName(studentDAO);
 //            findAllBooks(bookDAO);
 //            findBookByTitle(bookDAO);
 
 //            updateStudent(studentDAO);
-            updateBook(bookDAO);
+//            updateBook(bookDAO);
+
+//            deleteStudent(studentDAO);
+//            deleteStudentsByFirstName(studentDAO);
         };
     }
+    // DELETE
+    private void deleteStudentsByFirstName(StudentDAO studentDAO){
+        System.out.println("deleting all with first name Fake");
+        int rows = studentDAO.deleteWithFirstName("Fake");
+        System.out.println("deleted " + rows + " rows!");
+    }
+
+    private void deleteStudent(StudentDAO studentDAO){
+        System.out.println("deleting student with id 7....");
+        studentDAO.delete(7);
+        System.out.println("deleted!");
+    }
+
     // UPDATE
     private void updateBook(BookDAO bookDAO){
         System.out.println("finding...");
@@ -169,7 +185,7 @@ public class CruddemoApplication {
     }
 
     private void createStudent(StudentDAO studentDAO){
-        Student student = new Student("Gabe", "Ruh", "garuhmm@gmail.com");
+        Student student = new Student("Fake", "Ruh", "garuhmm@gmail.com");
         System.out.println("Saving student....");
         studentDAO.save(student);
 
