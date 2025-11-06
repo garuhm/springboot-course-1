@@ -36,10 +36,22 @@ public class CruddemoApplication {
 //            findAllBooks(bookDAO);
 //            findBookByTitle(bookDAO);
 
-            updateStudent(studentDAO);
+//            updateStudent(studentDAO);
+            updateBook(bookDAO);
         };
     }
     // UPDATE
+    private void updateBook(BookDAO bookDAO){
+        System.out.println("finding...");
+        Book book = bookDAO.findByid(2);
+        System.out.println("setting value...");
+        book.setPages(219);
+        System.out.println("updating....");
+        bookDAO.update(book);
+        System.out.println("updated in db!");
+        System.out.println(book.toString());
+    }
+
     private void updateStudent(StudentDAO studentDAO){
         System.out.println("finding...");
         Student student = studentDAO.findById(3);

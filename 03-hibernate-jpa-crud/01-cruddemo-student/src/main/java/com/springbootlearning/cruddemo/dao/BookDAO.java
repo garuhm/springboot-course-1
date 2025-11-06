@@ -9,4 +9,5 @@ public interface BookDAO {
     Book findByid(Integer id);
     List<Book> findAll();
     List<Book> findByTitle(String title);
+    void update(Book book);
 }

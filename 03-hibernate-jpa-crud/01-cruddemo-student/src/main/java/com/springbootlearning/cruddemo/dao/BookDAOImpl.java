@@ -42,4 +42,10 @@ public class BookDAOImpl implements BookDAO{
 
         return query.getResultList();
     }
+
+    @Override
+    @Transactional
+    public void update(Book book) {
+        manager.merge(book);
+    }
 }
