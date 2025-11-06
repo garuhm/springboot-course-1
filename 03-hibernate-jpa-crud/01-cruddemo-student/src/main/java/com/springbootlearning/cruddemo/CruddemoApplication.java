@@ -1,8 +1,10 @@
 package com.springbootlearning.cruddemo;
 
 import com.springbootlearning.cruddemo.dao.BookDAO;
+import com.springbootlearning.cruddemo.dao.PostDAO;
 import com.springbootlearning.cruddemo.dao.StudentDAO;
 import com.springbootlearning.cruddemo.entity.Book;
+import com.springbootlearning.cruddemo.entity.Post;
 import com.springbootlearning.cruddemo.entity.Student;
 
 import org.springframework.boot.CommandLineRunner;
@@ -20,29 +22,63 @@ public class CruddemoApplication {
 	}
 
     @Bean
-    public CommandLineRunner runner(StudentDAO studentDAO, BookDAO bookDAO){
+    public CommandLineRunner runner(PostDAO postDAO) {
         return runner -> {
+//            String content = "Not deleted.....";
+//            savePost(postDAO, content);
+
+//            System.out.println(postDAO.findById(1));
+//            List<Post> initPosts = postDAO.findAll();
+//            for(Post post: initPosts){
+//                System.out.println(post);
+//            }
+//            List<Post> withContent = postDAO.findByContent("Post");
+//            for(Post post: withContent){
+//                System.out.println(post);
+//            }
+
+//            postDAO.updateById(3, "Yes really not deleted... for now");
+//            System.out.println(postDAO.findById(3));
+
+//            postDAO.deleteById(3);
+            postDAO.deleteByContent("Post");
+            List<Post> initPosts = postDAO.findAll();
+            for(Post post: initPosts){
+                System.out.println(post);
+            }
+        };
+    }
+
+    private void savePost(PostDAO postDAO, String content) {
+        postDAO.save(new Post(content));
+        System.out.println("saved!");
+    }
+
+
+    //    @Bean
+//    public CommandLineRunner runner(StudentDAO studentDAO, BookDAO bookDAO){
+//        return runner -> {
 //            createStudent(studentDAO);
 //            createMultipleStudents(studentDAO);
-
+//
 //            createBook(bookDAO);
 //            createMultipleBooks(bookDAO);
-
+//
 //            readStudent(studentDAO);
 //            readBook(bookDAO);
-
-            findAllStudents(studentDAO);
+//
+//            findAllStudents(studentDAO);
 //            findStudentByLastName(studentDAO);
 //            findAllBooks(bookDAO);
 //            findBookByTitle(bookDAO);
-
+//
 //            updateStudent(studentDAO);
 //            updateBook(bookDAO);
-
+//
 //            deleteStudent(studentDAO);
 //            deleteStudentsByFirstName(studentDAO);
-        };
-    }
+//        };
+//    }
     // DELETE
     private void deleteStudentsByFirstName(StudentDAO studentDAO){
         System.out.println("deleting all with first name Fake");
