@@ -3,7 +3,6 @@ package com.springbootlearning.cruddemo.dao;
 import com.springbootlearning.cruddemo.entity.Employee;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -25,13 +24,18 @@ public class EmployeeDAOImpl implements EmployeeDAO{
     }
 
     @Override
-    public Employee getEmployeeById(int id) {
+    public Employee findByID(int id) {
         return manager.find(Employee.class, id);
     }
 
     @Override
-    @Transactional
-    public void createEmployee(Employee employee) {
-        manager.persist(employee);
+    public Employee save(Employee employee) {
+        // save OR update, depending if exists
+        return manager.merge(employee);
+    }
+
+    @Override
+    public void deleteById(int id) {
+        manager.remove(manager.find(Employee.class, id));
     }
 }
