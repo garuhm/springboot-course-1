@@ -1,4 +1,4 @@
-package com.springbootpractice.postapp.dao;
+package com.springbootpractice.postapp.entity;
 
 import jakarta.persistence.*;
 

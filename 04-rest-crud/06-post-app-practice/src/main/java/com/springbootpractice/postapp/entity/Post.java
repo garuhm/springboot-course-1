@@ -1,17 +1,14 @@
-package com.springbootpractice.postapp.dao;
+package com.springbootpractice.postapp.entity;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "comment")
-public class Comment {
+@Table(name = "post")
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
-    @Column(name = "post_id")
-    private int postId;
 
     @Column(name = "poster_id")
     private int posterId;
@@ -19,16 +16,19 @@ public class Comment {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "comment_count")
+    private int commentCount;
+
     @Column(name = "likes")
     private int likes;
 
-    public Comment() {
+    public Post() {
     }
 
-    public Comment(int postId, int posterId, String content) {
-        this.postId = postId;
+    public Post(int posterId, String content) {
         this.posterId = posterId;
         this.content = content;
+        commentCount = 0;
         likes = 0;
     }
 
@@ -38,14 +38,6 @@ public class Comment {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getPostId() {
-        return postId;
-    }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
     }
 
     public int getPosterId() {
@@ -64,6 +56,22 @@ public class Comment {
         this.content = content;
     }
 
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public void addComment(){
+        commentCount++;
+    }
+
+    public void removeComment(){
+        commentCount--;
+    }
+
     public int getLikes() {
         return likes;
     }
@@ -78,16 +86,5 @@ public class Comment {
 
     public void removeLike(){
         likes--;
-    }
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", postId=" + postId +
-                ", posterId=" + posterId +
-                ", content='" + content + '\'' +
-                ", likes=" + likes +
-                '}';
     }
 }
