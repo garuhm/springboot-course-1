@@ -254,7 +254,7 @@ public class PostAppRestController {
         result1.removeComment();
         postService.createPost(result1);
         postService.deleteComment(commentId);
-
+        return "Comment with id: " + commentId + "was successfully deleted!";
     }
 
     private <T> T apply(Map<String, T> payload, T obj){
