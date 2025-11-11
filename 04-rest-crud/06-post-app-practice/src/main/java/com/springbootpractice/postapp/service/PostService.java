@@ -16,6 +16,9 @@ public interface PostService {
     Comment getCommentById(int id);
     List<Comment> getCommentsByPost(int id);
     List<Comment> getCommentsByUser(int id);
+    int getCommentAmountByUserInPost(int posterId, int postId);
+    List<Integer> getPostIdsWithCommentsByUser(int id);
+    List<Integer> getUserIdsWithCommentOnPost(int id);
     Comment createComment(Comment comment);
     String deleteComment(int id);
     int deleteCommentsByPost(int id);

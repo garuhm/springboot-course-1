@@ -75,6 +75,21 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public int getCommentAmountByUserInPost(int posterId, int postId) {
+        return commentRepository.findNumberOfByUserInPost(posterId,postId).size();
+    }
+
+    @Override
+    public List<Integer> getPostIdsWithCommentsByUser(int id) {
+        return commentRepository.findPostsWithCommentsByUser(id);
+    }
+
+    @Override
+    public List<Integer> getUserIdsWithCommentOnPost(int id) {
+        return commentRepository.findUsersWithCommentsOnPost(id);
+    }
+
+    @Override
     public Comment createComment(Comment comment) {
         return commentRepository.save(comment);
     }
