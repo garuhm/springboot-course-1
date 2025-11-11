@@ -6,10 +6,7 @@ import com.springbootpractice.postapp.entity.User;
 import com.springbootpractice.postapp.service.PostService;
 import com.springbootpractice.postapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.node.ObjectNode;
 
@@ -35,14 +32,69 @@ public class PostAppRestController {
         return userService.getUsers();
     }
 
-    @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable int id){
-        User result = userService.getUserById(id);
+    @PostMapping("/users")
+    public User createUser(@RequestBody User user){
+        user.setId(0);
+        user.setCommentCount(0);
+        if(user.getEmail().equals("") || user.getUsername().equals("")){
+            // custom exception will be made later
+            throw new RuntimeException("Missing fields in request. Please fill in the username and email");
+        }
+        return userService.createUser(user);
+    }
+
+    @PutMapping("/users")
+    public User updateUser(@RequestBody User user){
+        if(user.getEmail().equals("") || user.getUsername().equals("") || user.getId() == 0 ){
+            // custom exception will be made later
+            throw new RuntimeException("Missing fields in request. Please fill in the id, username, and email");
+        }
+        return userService.createUser(user);
+    }
+
+    @GetMapping("/users/{userId}")
+    public User getUserById(@PathVariable int userId){
+        User result = userService.getUserById(userId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("User with id: " + id + " was not found");
+            throw new RuntimeException("User with id: " + userId + " was not found");
         }
         return result;
+    }
+
+    @PatchMapping("/user/{userId}")
+    public User patchUser(@PathVariable int userId, @RequestBody Map<String, User> payload){
+        User result = userService.getUserById(userId);
+        if(result == null){
+            // custom exception will be made later
+            throw new RuntimeException("User with id: " + userId + " was not found");
+        } if(payload.containsKey("id")){
+            // custom exception will be made later
+            throw new RuntimeException("Request body cannot include id. Please remove id from the request body");
+        }
+
+        return apply(payload,result);
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public String deleteUser(@PathVariable int userId){
+        User result = userService.getUserById(userId);
+        if(result == null){
+            // custom exception will be made later
+            throw new RuntimeException("User with id: " + userId + " was not found");
+        }
+
+        List<Integer> postsCommentedOnByUser = postService.getPostIdsWithCommentsByUser(userId);
+        for(Integer postId : postsCommentedOnByUser) {
+            deleteCommentsByUserOnPost(userId, postId);
+        }
+        List<Post> postsMadeByUser = postService.getPostsByUser(userId);
+        for(Post post : postsMadeByUser) {
+            deletePost(post.getId());
+        }
+        postService.deletePostsByUser(userId);
+        userService.deleteUser(userId);
+        return "User with id: " + userId + "was successfully deleted!";
     }
 
     @GetMapping("/posts")
@@ -50,24 +102,24 @@ public class PostAppRestController {
         return postService.getPosts();
     }
 
-    @GetMapping("/posts/{id}")
-    public Post getPostById(@PathVariable int id){
-        Post result = postService.getPostById(id);
+    @GetMapping("/posts/{postId}")
+    public Post getPostById(@PathVariable int postId){
+        Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + id + " was not found");
+            throw new RuntimeException("Post with id: " + postId + " was not found");
         }
         return result;
     }
 
-    @GetMapping("/posts/{id}/comments")
-    public List<Comment> getPostComments(@PathVariable int id){
-        Post result = postService.getPostById(id);
+    @GetMapping("/posts/{postId}/comments")
+    public List<Comment> getPostComments(@PathVariable int postId){
+        Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + id + " was not found");
+            throw new RuntimeException("Post with id: " + postId + " was not found");
         }
-        return postService.getCommentsByPost(id);
+        return postService.getCommentsByPost(postId);
     }
 
     @GetMapping("/posts/{postId}/comments/{commentId")
@@ -86,7 +138,7 @@ public class PostAppRestController {
         return postService.getCommentById(commentId);
     }
 
-    private <T> T apply(Map<String, Object> payload, T obj){
+    private <T> T apply(Map<String, T> payload, T obj){
         ObjectNode originalNode = mapper.convertValue(obj,ObjectNode.class);
         ObjectNode payloadNode = mapper.convertValue(payload,ObjectNode.class);
 
@@ -106,7 +158,6 @@ public class PostAppRestController {
             userService.createUser(user);
         }
         postService.deleteCommentsByPost(postId);
-        postService.deletePost(postId);
     }
 
     private void deleteCommentsByUserOnPost(int posterId, int postId){
