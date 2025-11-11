@@ -184,6 +184,25 @@ public class PostAppRestController {
         return postService.getCommentsByPost(postId);
     }
 
+    @PostMapping("/posts/{postId}/comments")
+    public Comment postComment(@PathVariable int postId, @RequestBody Comment comment){
+        Post result = postService.getPostById(postId);
+        if(result == null){
+            // custom exception will be made later
+            throw new RuntimeException("Post with id: " + postId + " was not found");
+        }
+        comment.setId(0);
+        comment.setPostId(postId);
+        comment.setLikes(0);
+        if(comment.getContent().equals("")){
+            // custom exception will be made later
+            throw new RuntimeException("Missing fields in request. Please fill add content to the post");
+        }
+        result.addComment();
+        postService.createPost(result);
+        return postService.createComment(comment);
+    }
+
     @GetMapping("/posts/{postId}/comments/{commentId")
     public Comment getPostComments(@PathVariable int postId, @PathVariable int commentId){
         Post result1 = postService.getPostById(postId);
@@ -198,6 +217,44 @@ public class PostAppRestController {
             throw new RuntimeException("COmment with id: " + postId + " was not found");
         }
         return postService.getCommentById(commentId);
+    }
+
+    @PatchMapping("/posts/{postId}/comments/{commentId}")
+    public Comment updateComment(@PathVariable int postId, @PathVariable int commentId, @RequestBody Map<String, Comment> payload){
+        Post result1 = postService.getPostById(postId);
+        if(result1 == null){
+            // custom exception will be made later
+            throw new RuntimeException("Post with id: " + postId + " was not found");
+        }
+        Comment result2 = postService.getCommentById(commentId);
+        if(result2 == null){
+            // custom exception will be made later
+            throw new RuntimeException("Comment with id: " + postId + " was not found");
+        }
+        if(payload.containsKey("id") || payload.containsKey("poster_id") || payload.containsKey("post_id") || payload.containsKey("likes")) {
+            // custom exception will be made later
+            throw new RuntimeException("Request body cannot include anything but content. Please remove other keys from the request body");
+        }
+
+        return apply(payload, result2);
+    }
+
+    @DeleteMapping("/posts/{postId}/comments/{commentId}")
+    public String deleteComment(@PathVariable int postId, @PathVariable int commentId){
+        Post result1 = postService.getPostById(postId);
+        if(result1 == null){
+            // custom exception will be made later
+            throw new RuntimeException("Post with id: " + postId + " was not found");
+        }
+        Comment result2 = postService.getCommentById(commentId);
+        if(result2 == null){
+            // custom exception will be made later
+            throw new RuntimeException("Comment with id: " + postId + " was not found");
+        }
+        result1.removeComment();
+        postService.createPost(result1);
+        postService.deleteComment(commentId);
+
     }
 
     private <T> T apply(Map<String, T> payload, T obj){
