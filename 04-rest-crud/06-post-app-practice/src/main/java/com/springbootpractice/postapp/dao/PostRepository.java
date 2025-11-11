@@ -11,7 +11,6 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     @Query("FROM post WHERE posterId=:id")
     List<Post> getByUser(int id);
 
-    @Transactional
     @Query("DELETE FROM post WHERE posterId=:id")
     int deleteByUser(int id);
 }

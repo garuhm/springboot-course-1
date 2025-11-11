@@ -14,11 +14,9 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     @Query("FROM comment WHERE postId=:id")
     List<Comment> findByPost(int id);
 
-    @Transactional
     @Query("DELETE FROM comment WHERE posterId=:id")
     int deleteByUser(int id);
 
-    @Transactional
     @Query("DELETE FROM comment WHERE postId=:id")
     int deleteByPost(int id);
 }
