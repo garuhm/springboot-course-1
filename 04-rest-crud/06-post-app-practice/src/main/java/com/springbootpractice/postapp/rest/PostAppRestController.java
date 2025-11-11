@@ -102,6 +102,19 @@ public class PostAppRestController {
         return postService.getPosts();
     }
 
+    @PostMapping("/posts")
+    public Post createPost(@RequestBody Post post){
+        post.setId(0);
+        post.setCommentCount(0);
+        post.setLikes(0);
+        if(post.getContent().equals("")){
+            // custom exception will be made later
+            throw new RuntimeException("Missing fields in request. Please fill add content to the post");
+        }
+
+        return postService.createPost(post);
+    }
+
     @GetMapping("/posts/{postId}")
     public Post getPostById(@PathVariable int postId){
         Post result = postService.getPostById(postId);
@@ -110,6 +123,55 @@ public class PostAppRestController {
             throw new RuntimeException("Post with id: " + postId + " was not found");
         }
         return result;
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public Post updatePost(@PathVariable int postId, @RequestBody Map<String, Post> payload){
+        Post result = postService.getPostById(postId);
+        if(result == null){
+            // custom exception will be made later
+            throw new RuntimeException("Post with id: " + postId + " was not found");
+        }
+        if(payload.containsKey("id") || payload.containsKey("poster_id") || payload.containsKey("comment_count") || payload.containsKey("likes")) {
+            // custom exception will be made later
+            throw new RuntimeException("Request body cannot include anything but content. Please remove other keys from the request body");
+        }
+
+        return apply(payload,result);
+    }
+
+    @DeleteMapping("/posts/{postId}")
+    public String deletePost(@PathVariable int postId){
+        Post result = postService.getPostById(postId);
+        if(result == null){
+            // custom exception will be made later
+            throw new RuntimeException("Post with id: " + postId + " was not found");
+        }
+        deletePostComments(postId);
+        postService.deletePost(postId);
+        return "Post with id: " + postId + "was successfully deleted!";
+    }
+
+    @PostMapping("/posts/{postId}/likes")
+    public Post likePost(@PathVariable int postId){
+        Post result = postService.getPostById(postId);
+        if(result == null){
+            // custom exception will be made later
+            throw new RuntimeException("Post with id: " + postId + " was not found");
+        }
+        result.addLike();
+        return postService.createPost(result);
+    }
+
+    @DeleteMapping("/posts/{postId}/likes")
+    public Post unlikePost(@PathVariable int postId){
+        Post result = postService.getPostById(postId);
+        if(result == null){
+            // custom exception will be made later
+            throw new RuntimeException("Post with id: " + postId + " was not found");
+        }
+        result.removeLike();
+        return postService.createPost(result);
     }
 
     @GetMapping("/posts/{postId}/comments")
@@ -146,7 +208,7 @@ public class PostAppRestController {
         return mapper.convertValue(originalNode, (Class<T>) obj.getClass());
     }
 
-    private void deletePost(int postId){
+    private void deletePostComments(int postId){
         List<Integer> affectedUsers = postService.getUserIdsWithCommentOnPost(postId);
         for(Integer userId: affectedUsers){
             User user = userService.getUserById(userId);
