@@ -3,6 +3,8 @@ package com.springbootpractice.postapp.rest;
 import com.springbootpractice.postapp.entity.Comment;
 import com.springbootpractice.postapp.entity.Post;
 import com.springbootpractice.postapp.entity.User;
+import com.springbootpractice.postapp.rest.exceptions.BadInputException;
+import com.springbootpractice.postapp.rest.exceptions.EntityNotFoundException;
 import com.springbootpractice.postapp.service.PostService;
 import com.springbootpractice.postapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class PostAppRestController {
         user.setCommentCount(0);
         if(user.getEmail().equals("") || user.getUsername().equals("")){
             // custom exception will be made later
-            throw new RuntimeException("Missing fields in request. Please fill in the username and email");
+            throw new BadInputException("Missing fields in request. Please fill in the username and email");
         }
         return userService.createUser(user);
     }
@@ -47,7 +49,7 @@ public class PostAppRestController {
     public User updateUser(@RequestBody User user){
         if(user.getEmail().equals("") || user.getUsername().equals("") || user.getId() == 0 ){
             // custom exception will be made later
-            throw new RuntimeException("Missing fields in request. Please fill in the id, username, and email");
+            throw new BadInputException("Missing fields in request. Please fill in the id, username, and email");
         }
         return userService.createUser(user);
     }
@@ -57,7 +59,7 @@ public class PostAppRestController {
         User result = userService.getUserById(userId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("User with id: " + userId + " was not found");
+            throw new EntityNotFoundException("User with id: " + userId + " was not found");
         }
         return result;
     }
@@ -67,10 +69,10 @@ public class PostAppRestController {
         User result = userService.getUserById(userId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("User with id: " + userId + " was not found");
+            throw new EntityNotFoundException("User with id: " + userId + " was not found");
         } if(payload.containsKey("id")){
             // custom exception will be made later
-            throw new RuntimeException("Request body cannot include id. Please remove id from the request body");
+            throw new BadInputException("Request body cannot include id. Please remove id from the request body");
         }
 
         return apply(payload,result);
@@ -81,7 +83,7 @@ public class PostAppRestController {
         User result = userService.getUserById(userId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("User with id: " + userId + " was not found");
+            throw new EntityNotFoundException("User with id: " + userId + " was not found");
         }
 
         List<Integer> postsCommentedOnByUser = postService.getPostIdsWithCommentsByUser(userId);
@@ -109,7 +111,7 @@ public class PostAppRestController {
         post.setLikes(0);
         if(post.getContent().equals("")){
             // custom exception will be made later
-            throw new RuntimeException("Missing fields in request. Please fill add content to the post");
+            throw new BadInputException("Missing fields in request. Please fill add content to the post");
         }
 
         return postService.createPost(post);
@@ -120,7 +122,7 @@ public class PostAppRestController {
         Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         return result;
     }
@@ -130,11 +132,11 @@ public class PostAppRestController {
         Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         if(payload.containsKey("id") || payload.containsKey("poster_id") || payload.containsKey("comment_count") || payload.containsKey("likes")) {
             // custom exception will be made later
-            throw new RuntimeException("Request body cannot include anything but content. Please remove other keys from the request body");
+            throw new BadInputException("Request body cannot include anything but content. Please remove other keys from the request body");
         }
 
         return apply(payload,result);
@@ -145,7 +147,7 @@ public class PostAppRestController {
         Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         deletePostComments(postId);
         postService.deletePost(postId);
@@ -157,7 +159,7 @@ public class PostAppRestController {
         Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         result.addLike();
         return postService.createPost(result);
@@ -168,7 +170,7 @@ public class PostAppRestController {
         Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         result.removeLike();
         return postService.createPost(result);
@@ -179,7 +181,7 @@ public class PostAppRestController {
         Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         return postService.getCommentsByPost(postId);
     }
@@ -189,14 +191,14 @@ public class PostAppRestController {
         Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         comment.setId(0);
         comment.setPostId(postId);
         comment.setLikes(0);
         if(comment.getContent().equals("")){
             // custom exception will be made later
-            throw new RuntimeException("Missing fields in request. Please fill add content to the post");
+            throw new BadInputException("Missing fields in request. Please fill add content to the post");
         }
         result.addComment();
         postService.createPost(result);
@@ -208,13 +210,13 @@ public class PostAppRestController {
         Post result1 = postService.getPostById(postId);
         if(result1 == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
 
         Comment result2 = postService.getCommentById(postId);
         if(result2 == null){
             // custom exception will be made later
-            throw new RuntimeException("COmment with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Comment with id: " + postId + " was not found");
         }
         return postService.getCommentById(commentId);
     }
@@ -224,16 +226,16 @@ public class PostAppRestController {
         Post result1 = postService.getPostById(postId);
         if(result1 == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         Comment result2 = postService.getCommentById(commentId);
         if(result2 == null){
             // custom exception will be made later
-            throw new RuntimeException("Comment with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Comment with id: " + postId + " was not found");
         }
         if(payload.containsKey("id") || payload.containsKey("poster_id") || payload.containsKey("post_id") || payload.containsKey("likes")) {
             // custom exception will be made later
-            throw new RuntimeException("Request body cannot include anything but content. Please remove other keys from the request body");
+            throw new BadInputException("Request body cannot include anything but content. Please remove other keys from the request body");
         }
 
         return apply(payload, result2);
@@ -244,12 +246,12 @@ public class PostAppRestController {
         Post result1 = postService.getPostById(postId);
         if(result1 == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         Comment result2 = postService.getCommentById(commentId);
         if(result2 == null){
             // custom exception will be made later
-            throw new RuntimeException("Comment with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Comment with id: " + postId + " was not found");
         }
         result1.removeComment();
         postService.createPost(result1);
@@ -262,12 +264,12 @@ public class PostAppRestController {
         Post result1 = postService.getPostById(postId);
         if(result1 == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         Comment result2 = postService.getCommentById(commentId);
         if(result2 == null){
             // custom exception will be made later
-            throw new RuntimeException("Comment with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Comment with id: " + postId + " was not found");
         }
         result2.addLike();
         return postService.createComment(result2);
@@ -278,12 +280,12 @@ public class PostAppRestController {
         Post result1 = postService.getPostById(postId);
         if(result1 == null){
             // custom exception will be made later
-            throw new RuntimeException("Post with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Post with id: " + postId + " was not found");
         }
         Comment result2 = postService.getCommentById(commentId);
         if(result2 == null){
             // custom exception will be made later
-            throw new RuntimeException("Comment with id: " + postId + " was not found");
+            throw new EntityNotFoundException("Comment with id: " + postId + " was not found");
         }
         result2.removeLike();
         return postService.createComment(result2);
