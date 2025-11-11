@@ -257,6 +257,38 @@ public class PostAppRestController {
         return "Comment with id: " + commentId + "was successfully deleted!";
     }
 
+    @PostMapping("/posts/{postId}/comments/{commentId}/likes")
+    public Comment likePost(@PathVariable int postId, @PathVariable int commentId){
+        Post result1 = postService.getPostById(postId);
+        if(result1 == null){
+            // custom exception will be made later
+            throw new RuntimeException("Post with id: " + postId + " was not found");
+        }
+        Comment result2 = postService.getCommentById(commentId);
+        if(result2 == null){
+            // custom exception will be made later
+            throw new RuntimeException("Comment with id: " + postId + " was not found");
+        }
+        result2.addLike();
+        return postService.createComment(result2);
+    }
+
+    @DeleteMapping("/posts/{postId}/comments/{commentId}/likes")
+    public Comment unlikePost(@PathVariable int postId, @PathVariable int commentId){
+        Post result1 = postService.getPostById(postId);
+        if(result1 == null){
+            // custom exception will be made later
+            throw new RuntimeException("Post with id: " + postId + " was not found");
+        }
+        Comment result2 = postService.getCommentById(commentId);
+        if(result2 == null){
+            // custom exception will be made later
+            throw new RuntimeException("Comment with id: " + postId + " was not found");
+        }
+        result2.removeLike();
+        return postService.createComment(result2);
+    }
+
     private <T> T apply(Map<String, T> payload, T obj){
         ObjectNode originalNode = mapper.convertValue(obj,ObjectNode.class);
         ObjectNode payloadNode = mapper.convertValue(payload,ObjectNode.class);
