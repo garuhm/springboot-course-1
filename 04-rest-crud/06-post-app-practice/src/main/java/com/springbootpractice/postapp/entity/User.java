@@ -60,6 +60,14 @@ public class User {
         this.commentCount = commentCount;
     }
 
+    public void addComment(){
+        commentCount++;
+    }
+
+    public void removeComment(){
+        commentCount--;
+    }
+
     @Override
     public String toString() {
         return "User{" +

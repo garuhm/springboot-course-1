@@ -25,8 +25,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(int postId, int posterId, String content) {
-        this.postId = postId;
+    public Comment(int posterId, String content) {
         this.posterId = posterId;
         this.content = content;
         likes = 0;

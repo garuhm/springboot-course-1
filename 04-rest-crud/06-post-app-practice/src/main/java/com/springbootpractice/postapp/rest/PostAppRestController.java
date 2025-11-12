@@ -107,12 +107,17 @@ public class PostAppRestController {
 
     @PostMapping("/posts")
     public Post createPost(@RequestBody Post post){
+        User result = userService.getUserById(post.getPosterId());
+        if(result == null){
+            // custom exception will be made later
+            throw new EntityNotFoundException("User with id: " + post.getPosterId() + " was not found");
+        }
         post.setId(0);
         post.setCommentCount(0);
         post.setLikes(0);
-        if(post.getContent().equals("")){
+        if(post.getContent().equals("") || post.getPosterId() == 0){
             // custom exception will be made later
-            throw new BadInputException("Missing fields in request. Please fill add content to the post");
+            throw new BadInputException("Missing fields in request. Please add content and poster id to the post");
         }
 
         return postService.createPost(post);
@@ -189,10 +194,15 @@ public class PostAppRestController {
 
     @PostMapping("/posts/{postId}/comments")
     public Comment postComment(@PathVariable int postId, @RequestBody Comment comment){
-        Post result = postService.getPostById(postId);
-        if(result == null){
+        Post result1 = postService.getPostById(postId);
+        if(result1 == null){
             // custom exception will be made later
             throw new EntityNotFoundException("Post with id: " + postId + " was not found");
+        }
+        User result2 = userService.getUserById(result1.getPosterId());
+        if(result2 == null){
+            // custom exception will be made later
+            throw new EntityNotFoundException("User with id: " + result1.getPosterId() + " was not found");
         }
         comment.setId(0);
         comment.setPostId(postId);
@@ -201,8 +211,10 @@ public class PostAppRestController {
             // custom exception will be made later
             throw new BadInputException("Missing fields in request. Please fill add content to the post");
         }
-        result.addComment();
-        postService.createPost(result);
+        result1.addComment();
+        result2.addComment();
+        userService.createUser(result2);
+        postService.createPost(result1);
         return postService.createComment(comment);
     }
 
@@ -255,8 +267,11 @@ public class PostAppRestController {
             throw new EntityNotFoundException("Comment with id: " + postId + " was not found");
         }
         result1.removeComment();
+        User user = userService.getUserById(result2.getPosterId());
         postService.createPost(result1);
         postService.deleteComment(commentId);
+        user.removeComment();
+        userService.createUser(user);
         return "Comment with id: " + commentId + "was successfully deleted!";
     }
 
@@ -307,6 +322,7 @@ public class PostAppRestController {
             int amount = postService.getCommentAmountByUserInPost(userId, postId);
 
             int userAmount = user.getCommentCount();
+            System.out.println(amount);
             user.setCommentCount(userAmount - amount);
 
             userService.createUser(user);
