@@ -322,7 +322,6 @@ public class PostAppRestController {
             int amount = postService.getCommentAmountByUserInPost(userId, postId);
 
             int userAmount = user.getCommentCount();
-            System.out.println(amount);
             user.setCommentCount(userAmount - amount);
 
             userService.createUser(user);
