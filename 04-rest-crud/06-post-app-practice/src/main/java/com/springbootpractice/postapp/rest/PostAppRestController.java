@@ -51,6 +51,7 @@ public class PostAppRestController {
             // custom exception will be made later
             throw new BadInputException("Missing fields in request. Please fill in the id, username, and email");
         }
+        user.setCommentCount(userService.getUserById(user.getId()).getCommentCount());
         return userService.createUser(user);
     }
 
@@ -64,8 +65,8 @@ public class PostAppRestController {
         return result;
     }
 
-    @PatchMapping("/user/{userId}")
-    public User patchUser(@PathVariable int userId, @RequestBody Map<String, User> payload){
+    @PatchMapping("/users/{userId}")
+    public User patchUser(@PathVariable int userId, @RequestBody Map<String, Object> payload){
         User result = userService.getUserById(userId);
         if(result == null){
             // custom exception will be made later
@@ -128,7 +129,7 @@ public class PostAppRestController {
     }
 
     @PatchMapping("/posts/{postId}")
-    public Post updatePost(@PathVariable int postId, @RequestBody Map<String, Post> payload){
+    public Post updatePost(@PathVariable int postId, @RequestBody Map<String, Object> payload){
         Post result = postService.getPostById(postId);
         if(result == null){
             // custom exception will be made later
@@ -222,7 +223,7 @@ public class PostAppRestController {
     }
 
     @PatchMapping("/posts/{postId}/comments/{commentId}")
-    public Comment updateComment(@PathVariable int postId, @PathVariable int commentId, @RequestBody Map<String, Comment> payload){
+    public Comment updateComment(@PathVariable int postId, @PathVariable int commentId, @RequestBody Map<String, Object> payload){
         Post result1 = postService.getPostById(postId);
         if(result1 == null){
             // custom exception will be made later
@@ -291,7 +292,7 @@ public class PostAppRestController {
         return postService.createComment(result2);
     }
 
-    private <T> T apply(Map<String, T> payload, T obj){
+    private <T> T apply(Map<String, Object> payload, T obj){
         ObjectNode originalNode = mapper.convertValue(obj,ObjectNode.class);
         ObjectNode payloadNode = mapper.convertValue(payload,ObjectNode.class);
 
