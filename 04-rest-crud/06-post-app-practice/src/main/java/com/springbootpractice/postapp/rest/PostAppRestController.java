@@ -205,7 +205,7 @@ public class PostAppRestController {
         return postService.createComment(comment);
     }
 
-    @GetMapping("/posts/{postId}/comments/{commentId")
+    @GetMapping("/posts/{postId}/comments/{commentId}")
     public Comment getPostComments(@PathVariable int postId, @PathVariable int commentId){
         Post result1 = postService.getPostById(postId);
         if(result1 == null){
