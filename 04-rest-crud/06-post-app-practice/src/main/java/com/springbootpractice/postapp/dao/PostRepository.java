@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Integer> {
-    @Query("FROM post WHERE posterId=:id")
+    @Query("FROM Post WHERE posterId=:id")
     List<Post> getByUser(int id);
 
-    @Query("DELETE FROM post WHERE posterId=:id")
+    @Query("DELETE FROM Post WHERE posterId=:id")
     int deleteByUser(int id);
 }
