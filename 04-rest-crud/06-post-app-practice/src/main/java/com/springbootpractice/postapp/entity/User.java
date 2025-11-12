@@ -22,10 +22,10 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, int commentCount) {
+    public User(String username, String email) {
         this.username = username;
         this.email = email;
-        this.commentCount = commentCount;
+        commentCount = 0;
     }
 
     public int getId() {

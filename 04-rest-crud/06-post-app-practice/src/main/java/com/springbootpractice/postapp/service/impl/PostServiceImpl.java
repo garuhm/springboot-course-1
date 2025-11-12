@@ -5,6 +5,7 @@ import com.springbootpractice.postapp.dao.PostRepository;
 import com.springbootpractice.postapp.entity.Comment;
 import com.springbootpractice.postapp.entity.Post;
 import com.springbootpractice.postapp.service.PostService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,17 +43,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public Post createPost(Post post) {
         return postRepository.save(post);
     }
 
     @Override
+    @Transactional
     public String deletePost(int id) {
         postRepository.deleteById(id);
         return "Successfully deleted post with id of: " + id;
     }
 
     @Override
+    @Transactional
     public int deletePostsByUser(int id) {
         return postRepository.deleteByUser(id);
     }
@@ -92,22 +96,26 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public Comment createComment(Comment comment) {
         return commentRepository.save(comment);
     }
 
     @Override
+    @Transactional
     public String deleteComment(int id) {
         commentRepository.deleteById(id);
         return "Successfully deleted comment with id of: " + id;
     }
 
     @Override
+    @Transactional
     public int deleteCommentsByPost(int id) {
         return commentRepository.deleteByPost(id);
     }
 
     @Override
+    @Transactional
     public int deleteCommentsByUser(int id) {
         return commentRepository.deleteByUser(id);
     }
