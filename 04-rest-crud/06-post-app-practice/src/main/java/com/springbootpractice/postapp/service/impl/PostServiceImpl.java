@@ -6,10 +6,12 @@ import com.springbootpractice.postapp.entity.Comment;
 import com.springbootpractice.postapp.entity.Post;
 import com.springbootpractice.postapp.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
     private CommentRepository commentRepository;
