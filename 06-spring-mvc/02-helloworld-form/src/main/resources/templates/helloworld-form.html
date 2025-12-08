@@ -5,8 +5,9 @@
     <title>Form</title>
 </head>
 <body>
-    <form th:action="@{/processForm}" method="GET">
+    <form th:action="@{/processFormV2}" method="GET">
         <input type="text" name="studentName" placeholder="What's your name?">
+        <input type="number" name="number" placeholder="What's your id?">
         <input type="text" name="school" placeholder="What's your school?">
         <input type="submit">
     </form>

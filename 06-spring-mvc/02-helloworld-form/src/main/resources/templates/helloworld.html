@@ -7,7 +7,9 @@
 </head>
 <body>
     <p>Hello World of Spring!</p>
+    <p th:text="'Message: ' + ${message}"/>
     <p th:text="'Student name: ' + ${param.studentName}"/>
+    <p th:text="'Number: ' + ${number}"/>
     <p th:text="'Student school: ' + ${param.school}"/>
 </body>
 </html>
