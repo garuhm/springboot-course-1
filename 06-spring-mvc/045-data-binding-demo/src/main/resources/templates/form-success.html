@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>Employee form</h3>
+    <p th:text="'Name: ' + ${employee.firstName} + ' ' + ${employee.lastName}"/>
+    <p th:text="'Country: ' + ${employee.country}" />
+    <p th:text="'Language: ' + ${employee.language}" />
+    <p>Programming languages:</p>
+    <ul>
+        <li th:each="language : ${employee.programmingLanguages}" th:text="${language}"/>
+    </ul>
+</body>
+</html>
