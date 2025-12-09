@@ -1,10 +1,13 @@
 package com.springmvc.thymeleafdemo.model;
 
+import java.util.List;
+
 public class Student {
     private String firstName;
     private String lastName;
     private String country;
     private String language;
+    private List<String> systems;
 
     public Student() {
     }
@@ -32,5 +35,11 @@ public class Student {
     }
     public void setLanguage(String language) {
         this.language = language;
+    }
+    public List<String> getSystems() {
+        return systems;
+    }
+    public void setSystems(List<String> systems) {
+        this.systems = systems;
     }
 }

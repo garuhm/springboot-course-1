@@ -22,6 +22,11 @@
         <p>Fav programming language:</p>
         <input type="radio" th:each="tempLang : ${languages}" th:field="*{language}" th:value="${tempLang}" th:text="${tempLang}" >
         <br/>
+        <p>Fav OSs:</p>
+        <input type="checkbox" th:field="*{systems}" th:value="Windows">Windows</input>
+        <input type="checkbox" th:field="*{systems}" th:value="macOS">macOS</input>
+        <input type="checkbox" th:field="*{systems}" th:value="Linux">Linux</input>
+        <br/>
         <br/>
         <input type="submit"></input>
     </form>
