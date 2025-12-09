@@ -16,11 +16,7 @@
         <br/>
         <p>Country:</p>
         <select th:field="*{country}">
-            <option th:value="US">USA</option>
-            <option th:value="BR">Brazil</option>
-            <option th:value="VZ">Venezuela</option>
-            <option th:value="FR">France</option>
-            <option th:value="DE">Germany</option>
+            <option th:each="tempCountry : ${countries}" th:value="${tempCountry}" th:text="${tempCountry}"/>
         </select>
         <br/>
         <br/>
