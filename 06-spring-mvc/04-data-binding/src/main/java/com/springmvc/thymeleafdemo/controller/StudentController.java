@@ -24,6 +24,9 @@ public class StudentController {
 
     @PostMapping("/processStudentForm")
     public String processForm(@ModelAttribute("student") Student student){
+        if(student.getLanguage().equals("CSharp")) {
+            student.setLanguage("C#");
+        }
         return "student-confirmation";
     }
 }
