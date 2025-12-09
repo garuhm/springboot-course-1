@@ -14,19 +14,19 @@ import java.util.List;
 public class StudentController {
     @Value("${countries}")
     private List<String> countries;
+    @Value("${languages}")
+    private List<String> languages;
 
     @GetMapping("/showStudentForm")
     public String showForm(Model model){
         model.addAttribute("student", new Student());
         model.addAttribute("countries", countries);
+        model.addAttribute("languages", languages);
         return "student-form";
     }
 
     @PostMapping("/processStudentForm")
     public String processForm(@ModelAttribute("student") Student student){
-        if(student.getLanguage().equals("CSharp")) {
-            student.setLanguage("C#");
-        }
         return "student-confirmation";
     }
 }

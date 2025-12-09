@@ -20,9 +20,7 @@
         </select>
         <br/>
         <p>Fav programming language:</p>
-        <input type="radio" th:field="*{language}" th:value="Java">Java</input>
-        <input type="radio" th:field="*{language}" th:value="Python">Python</input>
-        <input type="radio" th:field="*{language}" th:value="CSharp">C#</input>
+        <input type="radio" th:each="tempLang : ${languages}" th:field="*{language}" th:value="${tempLang}" th:text="${tempLang}" >
         <br/>
         <br/>
         <input type="submit"></input>
