@@ -15,6 +15,8 @@
         <br/>
        Last name (*):  <input th:field="*{lastName}" type="text"/> <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error"/>
         <br/>
+         Free passes:  <input th:field="*{freePasses}" type="text"/> <span th:if="${#fields.hasErrors('freePasses')}" th:errors="*{freePasses}" class="error"/>
+        <br/>
         <input type="submit" />
     </form>
 </body>
