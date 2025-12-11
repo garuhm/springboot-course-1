@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Confirmation</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+    <p th:text="'Name: ' + ${student.firstName} + ' ' + ${student.lastName}"/>
+    <p th:text="'ID: ' + ${student.id}"/>
+    <p th:text="'Course Code: ' + ${student.courseCode}"/>
+</body>
+</html>
