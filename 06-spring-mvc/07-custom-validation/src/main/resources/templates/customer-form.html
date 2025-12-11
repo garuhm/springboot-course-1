@@ -19,6 +19,8 @@
         <br/>
         Postal Code:  <input th:field="*{postalCode}" type="text"/> <span th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}" class="error"/>
         <br/>
+        Course code:  <input th:field="*{courseCode}" type="text"/> <span th:if="${#fields.hasErrors('courseCode')}" th:errors="*{courseCode}" class="error"/>
+        <br/>
         <input type="submit" />
     </form>
 </body>
