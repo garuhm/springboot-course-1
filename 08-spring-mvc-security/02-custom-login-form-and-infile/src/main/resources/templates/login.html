@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <h3>Login</h3>
     <hr/>
+
+    <div th:if="${param.error}">
+        <i class="failed">Incorrect username/password.</i>
+        <br/>
+        <br/>
+    </div>
+
     <form action="#" method="POST" th:action="@{/authenticate}">
         <input type="text" name="username" placeholder="Username"/>
         <br/>
