@@ -35,7 +35,7 @@ public class DemoSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security) {
-        security.authorizeHttpRequests(configurer -> configurer.anyRequest().authenticated()).formLogin(form -> form.loginPage("/login").loginProcessingUrl("/authenticate").permitAll());
+        security.authorizeHttpRequests(configurer -> configurer.anyRequest().authenticated()).formLogin(form -> form.loginPage("/login").loginProcessingUrl("/authenticate").permitAll()).logout(logout -> logout.permitAll());
         return security.build();
     }
 }
