@@ -35,7 +35,7 @@ public class DemoSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security) {
-        security.authorizeHttpRequests(configurer -> configurer.requestMatchers("/").hasRole("EMPLOYEE").requestMatchers("/leaders").hasRole("MANAGER").requestMatchers("/systems").hasRole("ADMIN").anyRequest().authenticated()).formLogin(form -> form.loginPage("/login").loginProcessingUrl("/authenticate").permitAll()).logout(logout -> logout.permitAll());
+        security.authorizeHttpRequests(configurer -> configurer.requestMatchers("/").hasRole("EMPLOYEE").requestMatchers("/leaders").hasRole("MANAGER").requestMatchers("/systems").hasRole("ADMIN").anyRequest().authenticated()).formLogin(form -> form.loginPage("/login").loginProcessingUrl("/authenticate").permitAll()).logout(logout -> logout.permitAll()).exceptionHandling(configurer -> configurer.accessDeniedPage("/access-denied"));
         return security.build();
     }
 }
