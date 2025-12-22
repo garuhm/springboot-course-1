@@ -1,0 +1,9 @@
+.error {
+  font-style: italic;
+  color: red;
+}
+
+.success {
+  font-style: italic;
+  color: green;
+}
