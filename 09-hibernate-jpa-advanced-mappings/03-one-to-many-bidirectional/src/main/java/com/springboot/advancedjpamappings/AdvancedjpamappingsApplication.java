@@ -22,8 +22,13 @@ public class AdvancedjpamappingsApplication {
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
 //            createInstructorWithCourses(appDAO);
-            deleteInstructor(appDAO, 1);
+            deleteCourse(appDAO, 10);
         };
+    }
+
+    public void deleteCourse(AppDAO appDAO, int id){
+        appDAO.deleteCourseById(id);
+        System.out.println("done!");
     }
 
     public void updateCourse(AppDAO appDAO, int id){
