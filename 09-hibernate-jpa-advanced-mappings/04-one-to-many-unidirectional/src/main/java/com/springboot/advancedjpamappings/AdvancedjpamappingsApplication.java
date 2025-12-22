@@ -22,8 +22,15 @@ public class AdvancedjpamappingsApplication {
     @Bean
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
-            createInstructorWithCoursesReviews(appDAO);
+//            createInstructorWithCoursesReviews(appDAO);
+
+            findCoursesWithReviews(appDAO, 10);
         };
+    }
+
+    private void findCoursesWithReviews(AppDAO appDAO, int id){
+        Course course = appDAO.findCourseByIdJoinFetch(id);
+        System.out.println(course);
     }
 
     private void createInstructorWithCoursesReviews(AppDAO appDAO){

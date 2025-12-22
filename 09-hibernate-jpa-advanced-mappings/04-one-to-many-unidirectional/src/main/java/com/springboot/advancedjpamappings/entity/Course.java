@@ -59,11 +59,20 @@ public class Course {
         this.instructor = instructor;
     }
 
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
     @Override
     public String toString() {
         return "Course {\n" +
                 "id: " + id +
                 "\ntitle: '" + title + '\'' +
+                "\nreviews: " + reviews +
                 "\n}";
     }
 }
