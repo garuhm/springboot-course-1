@@ -22,7 +22,7 @@ public class AdvancedjpamappingsApplication {
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
 //            createInstructorWithCourses(appDAO);
-            updateCourse(appDAO, 10);
+            deleteInstructor(appDAO, 1);
         };
     }
 
