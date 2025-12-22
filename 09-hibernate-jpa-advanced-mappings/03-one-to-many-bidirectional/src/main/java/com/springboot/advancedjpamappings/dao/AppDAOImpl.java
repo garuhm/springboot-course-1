@@ -1,12 +1,16 @@
 package com.springboot.advancedjpamappings.dao;
 
+import com.springboot.advancedjpamappings.entity.Course;
 import com.springboot.advancedjpamappings.entity.Instructor;
 import com.springboot.advancedjpamappings.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class AppDAOImpl implements AppDAO {
@@ -45,5 +49,14 @@ public class AppDAOImpl implements AppDAO {
         InstructorDetail instructorDetail = findInstructorDetailById(id);
         instructorDetail.getInstructor().setInstructorDetail(null);
         entityManager.remove(instructorDetail);
+    }
+
+    @Override
+    @Transactional
+    public List<Course> findCoursesByInstructorId(int id){
+        TypedQuery<Course> query = entityManager.createQuery("from Course where instructor.id = :data", Course.class);
+        query.setParameter("data", id);
+
+        return query.getResultList();
     }
 }

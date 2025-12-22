@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class AdvancedjpamappingsApplication {
 
@@ -20,7 +22,15 @@ public class AdvancedjpamappingsApplication {
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
 //            createInstructorWithCourses(appDAO);
+            findInstructorWithCourses(appDAO, 1);
         };
+    }
+
+    private void findInstructorWithCourses(AppDAO appDAO, int id){
+        Instructor instructor = appDAO.findInstructorById(id);
+        List<Course> courses = appDAO.findCoursesByInstructorId(id);
+        instructor.setCourses(courses);
+        System.out.println(instructor);
     }
 
     private void createInstructorWithCourses(AppDAO appDAO){
