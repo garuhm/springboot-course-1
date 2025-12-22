@@ -1,11 +1,12 @@
-package com.springboot.advancedjpamappings;
+package com.springboot.advancedjpamappings.dao;
 
-import com.springboot.advancedjpamappings.dao.AppDAO;
 import com.springboot.advancedjpamappings.entity.Instructor;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class AppDAOImpl implements AppDAO {
     private EntityManager entityManager;
 
