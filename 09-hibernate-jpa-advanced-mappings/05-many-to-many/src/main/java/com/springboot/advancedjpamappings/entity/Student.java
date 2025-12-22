@@ -84,7 +84,6 @@ public class Student {
                 "\nfirstName: '" + firstName + '\'' +
                 "\nlastName: '" + lastName + '\'' +
                 "\nemail: '" + email + '\'' +
-                "\ncourses: " + courses +
                 "\n}";
     }
 }

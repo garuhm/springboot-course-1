@@ -1,9 +1,6 @@
 package com.springboot.advancedjpamappings.dao;
 
-import com.springboot.advancedjpamappings.entity.Course;
-import com.springboot.advancedjpamappings.entity.Instructor;
-import com.springboot.advancedjpamappings.entity.InstructorDetail;
-import com.springboot.advancedjpamappings.entity.Review;
+import com.springboot.advancedjpamappings.entity.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -116,5 +113,28 @@ public class AppDAOImpl implements AppDAO {
     @Override
     public void deleteReviewById(int id){
         entityManager.remove(entityManager.find(Review.class, id));
+    }
+
+    @Override
+    public Student findStudentById(int id){
+        return entityManager.find(Student.class, id);
+    }
+
+    @Override
+    public Course findCourseAndStudentsByCourseId(int id){
+        TypedQuery<Course> query = entityManager.createQuery("select c from Course c JOIN FETCH c.students where c.id = :data", Course.class);
+        query.setParameter("data", id);
+
+        Course i = query.getSingleResult();
+        return i;
+    }
+
+    @Override
+    public Student findCourseAndStudentsByStudentId(int id){
+        TypedQuery<Student> query = entityManager.createQuery("select s from Student s JOIN FETCH s.courses where s.id = :data", Student.class);
+        query.setParameter("data", id);
+
+        Student i = query.getSingleResult();
+        return i;
     }
 }

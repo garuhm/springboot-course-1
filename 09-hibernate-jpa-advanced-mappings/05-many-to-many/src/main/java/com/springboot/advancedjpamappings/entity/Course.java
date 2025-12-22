@@ -95,7 +95,6 @@ public class Course {
         return "Course {\n" +
                 "id: " + id +
                 "\ntitle: '" + title + '\'' +
-                "\nreviews: " + reviews +
                 "\n}";
     }
 }

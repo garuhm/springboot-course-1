@@ -20,8 +20,13 @@ public class AdvancedjpamappingsApplication {
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
 //            createCourseAndStudents(appDAO);
-
+            findCourseAndStudents(appDAO, 2);
         };
+    }
+
+    private void findCourseAndStudents(AppDAO appDAO, int id){
+//        System.out.println(appDAO.findCourseAndStudentsByCourseId(id).getStudents());
+        System.out.println(appDAO.findCourseAndStudentsByStudentId(id).getCourses());
     }
 
     private void createCourseAndStudents(AppDAO appDAO){
@@ -36,13 +41,12 @@ public class AdvancedjpamappingsApplication {
         Student student2 = new Student("Jackelyn", "Vuong-Dinh", "jvuongdinh@gmail.com");
         Student student3 = new Student("Nhi", "Thien Ma", "nthienma@gmail.com");
 
-        student1.addCourse(course);
-        student2.addCourse(course2);
-        student3.addCourse(course);
-        student3.addCourse(course2);
+        course.addStudent(student1);
+        course2.addStudent(student2);
+        course.addStudent(student3);
+        course2.addStudent(student3);
 
         appDAO.save(course);
-        appDAO.save(course2);
     }
 
     private void findCoursesWithReviews(AppDAO appDAO, int id){
