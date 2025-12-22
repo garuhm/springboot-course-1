@@ -20,8 +20,13 @@ public class AdvancedjpamappingsApplication {
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
 //            createCourseAndStudents(appDAO);
-            findCourseAndStudents(appDAO, 2);
+            deleteStudent(appDAO, 3);
         };
+    }
+
+    private void deleteStudent(AppDAO appDAO, int id){
+        appDAO.deleteStudent(id);
+        System.out.println("done!");
     }
 
     private void findCourseAndStudents(AppDAO appDAO, int id){

@@ -36,4 +36,7 @@ public interface AppDAO {
     Course findCourseAndStudentsByCourseId(int id);
 
     Student findCourseAndStudentsByStudentId(int id);
+
+    @Transactional
+    void deleteStudent(int id);
 }
