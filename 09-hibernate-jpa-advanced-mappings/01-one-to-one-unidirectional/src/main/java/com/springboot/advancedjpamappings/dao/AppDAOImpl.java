@@ -2,6 +2,7 @@ package com.springboot.advancedjpamappings.dao;
 
 import com.springboot.advancedjpamappings.entity.Instructor;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -19,5 +20,10 @@ public class AppDAOImpl implements AppDAO {
     @Transactional
     public void save(Instructor instructor) {
         entityManager.persist(instructor);
+    }
+
+    @Override
+    public Instructor findInstructorById(int id){
+        return entityManager.find(Instructor.class, id);
     }
 }

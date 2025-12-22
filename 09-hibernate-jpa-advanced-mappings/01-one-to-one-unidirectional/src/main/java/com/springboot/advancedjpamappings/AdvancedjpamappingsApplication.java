@@ -18,8 +18,14 @@ public class AdvancedjpamappingsApplication {
     @Bean
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
-            createInstructor(appDAO);
+            findInstructor(appDAO, 1);
         };
+    }
+
+    private void findInstructor(AppDAO appDAO, int id){
+        Instructor instructor = appDAO.findInstructorById(id);
+
+        System.out.println(instructor);
     }
 
     private void createInstructor(AppDAO appDAO){
