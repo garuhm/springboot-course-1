@@ -24,7 +24,6 @@ public class AdvancedjpamappingsApplication {
         return runner -> {
 //            createInstructorWithCoursesReviews(appDAO);
 
-            deleteCourse(appDAO, 10);
         };
     }
 
