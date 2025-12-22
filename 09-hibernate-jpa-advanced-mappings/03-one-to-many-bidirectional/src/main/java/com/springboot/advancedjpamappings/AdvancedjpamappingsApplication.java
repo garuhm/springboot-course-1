@@ -27,9 +27,7 @@ public class AdvancedjpamappingsApplication {
     }
 
     private void findInstructorWithCourses(AppDAO appDAO, int id){
-        Instructor instructor = appDAO.findInstructorById(id);
-        List<Course> courses = appDAO.findCoursesByInstructorId(id);
-        instructor.setCourses(courses);
+        Instructor instructor = appDAO.findCoursesByInstructorIdJoinFetch(id);
         System.out.println(instructor);
     }
 
