@@ -18,8 +18,19 @@ public class AdvancedjpamappingsApplication {
     @Bean
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
-            deleteInstructor(appDAO, 1);
+            createInstructor(appDAO);
         };
+    }
+
+    private void deleteInstructorDetails(AppDAO appDAO, int id){
+        appDAO.deleteInstructorById(id);
+        System.out.println("done!");
+    }
+
+    private void findInstructorDetails(AppDAO appDAO, int id){
+        Instructor instructor = appDAO.findInstructorDetailById(id).getInstructor();
+
+        System.out.println(instructor);
     }
 
     private void deleteInstructor(AppDAO appDAO, int id){

@@ -1,6 +1,7 @@
 package com.springboot.advancedjpamappings.dao;
 
 import com.springboot.advancedjpamappings.entity.Instructor;
+import com.springboot.advancedjpamappings.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
@@ -31,5 +32,15 @@ public class AppDAOImpl implements AppDAO {
     @Transactional
     public void deleteInstructorById(int id) {
         entityManager.remove(findInstructorById(id));
+    }
+
+    @Override
+    public InstructorDetail findInstructorDetailById(int id) {
+        return entityManager.find(InstructorDetail.class, id);
+    }
+
+    @Override
+    public void deleteInstructorDetailById(int id) {
+        entityManager.remove(findInstructorDetailById(id));
     }
 }
