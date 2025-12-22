@@ -1,6 +1,7 @@
 package com.springboot.advancedjpamappings;
 
 import com.springboot.advancedjpamappings.dao.AppDAO;
+import com.springboot.advancedjpamappings.entity.Course;
 import com.springboot.advancedjpamappings.entity.Instructor;
 import com.springboot.advancedjpamappings.entity.InstructorDetail;
 import org.springframework.boot.CommandLineRunner;
@@ -18,9 +19,22 @@ public class AdvancedjpamappingsApplication {
     @Bean
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
-//            createInstructor(appDAO);
-            deleteInstructorDetails(appDAO, 8);
+//            createInstructorWithCourses(appDAO);
         };
+    }
+
+    private void createInstructorWithCourses(AppDAO appDAO){
+        Instructor instructor = new Instructor("Gabe", "Ruh", "garuhm@gmail.com");
+        instructor.setInstructorDetail(new InstructorDetail("http:///www.youtube.com/gaberuh", "guitar"));
+
+        Course course = new Course("Spring Boot 101");
+        Course course2 = new Course("Spring Boot Zero to Hero");
+        instructor.add(course);
+        instructor.add(course2);
+
+        System.out.println(instructor);
+
+        appDAO.save(instructor);
     }
 
     private void deleteInstructorDetails(AppDAO appDAO, int id){
