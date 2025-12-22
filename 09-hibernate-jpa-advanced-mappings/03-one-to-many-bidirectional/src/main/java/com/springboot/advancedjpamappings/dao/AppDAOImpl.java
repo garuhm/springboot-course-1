@@ -1,0 +1,49 @@
+package com.springboot.advancedjpamappings.dao;
+
+import com.springboot.advancedjpamappings.entity.Instructor;
+import com.springboot.advancedjpamappings.entity.InstructorDetail;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class AppDAOImpl implements AppDAO {
+    private EntityManager entityManager;
+
+    @Autowired
+    public AppDAOImpl(EntityManager entityManager){
+        this.entityManager = entityManager;
+    }
+
+    @Override
+    @Transactional
+    public void save(Instructor instructor) {
+        entityManager.persist(instructor);
+    }
+
+    @Override
+    public Instructor findInstructorById(int id){
+        return entityManager.find(Instructor.class, id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteInstructorById(int id) {
+        entityManager.remove(findInstructorById(id));
+    }
+
+    @Override
+    public InstructorDetail findInstructorDetailById(int id) {
+        return entityManager.find(InstructorDetail.class, id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteInstructorDetailById(int id) {
+        InstructorDetail instructorDetail = findInstructorDetailById(id);
+        instructorDetail.getInstructor().setInstructorDetail(null);
+        entityManager.remove(instructorDetail);
+    }
+}
