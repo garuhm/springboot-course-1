@@ -22,8 +22,15 @@ public class AdvancedjpamappingsApplication {
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
 //            createInstructorWithCourses(appDAO);
-            findInstructorWithCourses(appDAO, 1);
+            updateInstructor(appDAO, 1);
         };
+    }
+
+    public void updateInstructor(AppDAO appDAO, int id){
+        Instructor instructor = appDAO.findInstructorById(id);
+        instructor.setLastName("Ruh-Mosquera");
+        System.out.println(instructor.getLastName());
+        appDAO.update(instructor);
     }
 
     private void findInstructorWithCourses(AppDAO appDAO, int id){
