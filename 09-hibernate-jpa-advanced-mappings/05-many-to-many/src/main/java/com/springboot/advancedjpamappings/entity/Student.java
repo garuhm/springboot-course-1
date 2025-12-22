@@ -75,7 +75,6 @@ public class Student {
             courses = new ArrayList<>();
         }
         courses.add(course);
-        course.addStudent(this);
     }
 
     @Override

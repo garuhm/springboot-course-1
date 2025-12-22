@@ -1,10 +1,7 @@
 package com.springboot.advancedjpamappings;
 
 import com.springboot.advancedjpamappings.dao.AppDAO;
-import com.springboot.advancedjpamappings.entity.Course;
-import com.springboot.advancedjpamappings.entity.Instructor;
-import com.springboot.advancedjpamappings.entity.InstructorDetail;
-import com.springboot.advancedjpamappings.entity.Review;
+import com.springboot.advancedjpamappings.entity.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,9 +19,30 @@ public class AdvancedjpamappingsApplication {
     @Bean
     public CommandLineRunner commandLineRunner(AppDAO appDAO){
         return runner -> {
-//            createInstructorWithCoursesReviews(appDAO);
+//            createCourseAndStudents(appDAO);
 
         };
+    }
+
+    private void createCourseAndStudents(AppDAO appDAO){
+        Course course = new Course("Spring Boot 101");
+        Course course2 = new Course("Spring Boot Zero to Hero");
+
+        course.add(new Review("good"));
+        course.add(new Review("amazing"));
+        course2.add(new Review("saved my life!"));
+
+        Student student1 = new Student("Gabe", "Ruh", "garuhm@gmail.com");
+        Student student2 = new Student("Jackelyn", "Vuong-Dinh", "jvuongdinh@gmail.com");
+        Student student3 = new Student("Nhi", "Thien Ma", "nthienma@gmail.com");
+
+        student1.addCourse(course);
+        student2.addCourse(course2);
+        student3.addCourse(course);
+        student3.addCourse(course2);
+
+        appDAO.save(course);
+        appDAO.save(course2);
     }
 
     private void findCoursesWithReviews(AppDAO appDAO, int id){
