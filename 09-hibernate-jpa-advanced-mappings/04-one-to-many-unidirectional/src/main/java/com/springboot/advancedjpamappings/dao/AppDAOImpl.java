@@ -3,6 +3,7 @@ package com.springboot.advancedjpamappings.dao;
 import com.springboot.advancedjpamappings.entity.Course;
 import com.springboot.advancedjpamappings.entity.Instructor;
 import com.springboot.advancedjpamappings.entity.InstructorDetail;
+import com.springboot.advancedjpamappings.entity.Review;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -103,5 +104,11 @@ public class AppDAOImpl implements AppDAO {
     public void deleteCourseById(int id){
         Course course = findCourseById(id);
         entityManager.remove(course);
+    }
+
+    @Transactional
+    @Override
+    public void deleteReviewById(int id){
+        entityManager.remove(entityManager.find(Review.class, id));
     }
 }

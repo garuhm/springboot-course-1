@@ -3,6 +3,7 @@ package com.springboot.advancedjpamappings.dao;
 import com.springboot.advancedjpamappings.entity.Course;
 import com.springboot.advancedjpamappings.entity.Instructor;
 import com.springboot.advancedjpamappings.entity.InstructorDetail;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -24,4 +25,7 @@ public interface AppDAO {
     void update(Course course);
 
     void deleteCourseById(int id);
+
+    @Transactional
+    void deleteReviewById(int id);
 }
