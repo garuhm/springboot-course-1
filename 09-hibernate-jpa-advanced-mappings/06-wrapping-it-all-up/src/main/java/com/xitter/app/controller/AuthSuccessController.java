@@ -23,9 +23,7 @@ public class AuthSuccessController implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("in auth success");
         String username = authentication.getName();
-        System.out.println("username: " + username);
         User user = service.findByUsername(username);
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
