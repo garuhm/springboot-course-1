@@ -77,6 +77,20 @@ public class User {
         roles.add(role);
     }
 
+    public void addPost(Post post){
+        if(posts == null){
+            posts = new ArrayList<>();
+        }
+        posts.add(post);
+    }
+
+    public void addComment(Comment comment){
+        if(comments == null){
+            comments = new ArrayList<>();
+        }
+        comments.add(comment);
+    }
+
     public String getUsername() {
         return username;
     }

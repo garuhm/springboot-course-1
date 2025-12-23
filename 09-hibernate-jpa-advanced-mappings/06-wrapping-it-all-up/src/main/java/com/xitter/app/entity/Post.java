@@ -2,6 +2,7 @@ package com.xitter.app.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,22 +13,43 @@ public class Post {
     @Column(name="id")
     private int id;
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name="user")
     private User user ;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "post", cascade = {CascadeType.REMOVE, CascadeType.REFRESH})
     private List<Comment> comments;
 
+    @Column(name="content")
+    private String content;
+
     @Column(name="likes")
     private int likes;
+
 
     public Post() {
     }
 
-    public Post(User user, List<Comment> comments) {
+    public Post(User user, String content) {
         this.user = user;
-        this.comments = comments;
+        this.content = content;
         likes = 0;
+
+        user.addPost(this);
+    }
+
+    public void addComment(Comment comment){
+        if(comments == null){
+            comments = new ArrayList<>();
+        }
+        comments.add(comment);
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public int getId() {
@@ -66,6 +88,7 @@ public class Post {
     public String toString() {
         return "Post {\n" +
                 "id: " + id +
+                "\ncontent: '" + content + '\'' +
                 "\nuser: " + user +
                 "\ncomments count: " + comments.size() +
                 "\nlikes: " + likes +

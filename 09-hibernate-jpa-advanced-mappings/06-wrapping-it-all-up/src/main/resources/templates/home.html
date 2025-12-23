@@ -3,14 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <h1>Home</h1>
     <hr/>
-    Welcome, <span th:text="${user.displayName}"/>
-    <hr />
     <form action="#" th:action="@{/logout}" method="POST">
+        Welcome, <span th:text="${user.displayName}"/>
         <input type="submit" value="Logout"/>
     </form>
+    <hr />
+    <button class="show-post-form">+</button>
+    <hr/>
+    <form action="#" th:action="@{/post}" method="POST" th:object="${createPost}" class="add-post hidden">
+        <h3>Create a post</h3>
+        <input type="text" placeholder="Hello world!..." th:field="*{content}"/> <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error"/>
+        <input type="submit" value="Post"/>
+        <hr/>
+    </form>
+    <div class="posts">
+        <div th:each="post : ${timeline}">
+            Poster: <span th:text="${post.user.displayName}"/> (@<span th:text="${post.user.username}"/>)
+            <p th:text="${post.content}"/>
+            Likes: <span th:text="${post.likes}"/>
+            <hr />
+        </div>
+    </div>
+
+    <script th:src="@{/javascript/home.js}"></script>
 </body>
 </html>

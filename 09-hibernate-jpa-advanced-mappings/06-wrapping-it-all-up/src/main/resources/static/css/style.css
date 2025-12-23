@@ -5,5 +5,9 @@
 
 .success {
   font-style: italic;
-  color: green;
+  color: green; 
+}
+
+.hidden {
+    display: none;
 }

@@ -10,12 +10,15 @@ public class Comment {
     @Column(name="id")
     private int id;
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name="user")
     private User user ;
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name="post")
     private Post post ;
+
+    @Column(name="content")
+    private String content;
 
     @Column(name="likes")
     private int likes;
@@ -23,10 +26,14 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(User user, Post post) {
+    public Comment(User user, Post post, String content, int likes) {
         this.user = user;
         this.post = post;
+        this.content = content;
         likes = 0;
+
+        user.addComment(this);
+        post.addComment(this);
     }
 
     public int getId() {
