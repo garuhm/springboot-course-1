@@ -1,26 +1,25 @@
 package com.xitter.app.controller;
 
+import com.xitter.app.entity.User;
 import com.xitter.app.model.WebPost;
-import com.xitter.app.service.PostServiceImpl;
+import com.xitter.app.service.PostService;
 import com.xitter.app.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
 @Controller
 public class AppController {
     private UserService userService;
-    private PostServiceImpl postService;
+    private PostService postService;
 
     @Autowired
-    public AppController(UserService userService, PostServiceImpl postService) {
+    public AppController(UserService userService, PostService postService) {
         this.userService = userService;
         this.postService = postService;
     }
@@ -31,6 +30,7 @@ public class AppController {
         model.addAttribute("user", userService.findByUsername(principal.getName()));
         model.addAttribute("timeline", postService.findAllPosts());
         model.addAttribute("createPost", new WebPost());
+        model.addAttribute("editPost", new WebPost());
         return "home";
     }
 
@@ -39,9 +39,28 @@ public class AppController {
         if(result.hasErrors()){
             return "home";
         }
-        System.out.println(principal.getName());
         webPost.setUsername(principal.getName());
         postService.createPost(webPost);
-        return "redirect:/home";
+        int postID = postService.findPostsByUsername(principal.getName()).getFirst().getId();
+        return "redirect:/post/" + postID;
+    }
+
+    @GetMapping("/post/{postId}")
+    public String getPost(@PathVariable("postId") int postID, Model model, Principal principal){
+        model.addAttribute("editPost", new WebPost());
+        model.addAttribute("post", postService.findPostById(postID));
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        return "post";
+    }
+
+    @PutMapping("/post/{postId}")
+    public String updatePost(@PathVariable("postId") int postID, @Valid @ModelAttribute("editPost") WebPost webPost, BindingResult result, Principal principal){
+        if(result.hasErrors() || !postService.findPostById(postID).getUser().getUsername().equals(principal.getName())){
+            return "home";
+        }
+        webPost.setId(postID);
+        webPost.setUsername(principal.getName());
+        postService.updatePost(webPost);
+        return "redirect:/post/" + postID;
     }
 }

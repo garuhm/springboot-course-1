@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <a th:href="@{/home}">
+        <h1>Xitter</h1>
+    </a>
+    <hr/>
+    <form action="#" th:action="@{/logout}" method="POST">
+        Welcome, <span th:text="${user.displayName}"></span>
+        <input type="submit" value="Logout"/>
+    </form>
+    <hr />
+    <div>
+        <div class="post-content">
+            Poster: <span th:text="${post.user.displayName}"/> (@<span th:text="${post.user.username}"/>)
+            <p th:text="${post.content}"/>
+            Likes: <span th:text="${post.likes}"/>
+            <br/>
+            <br/>
+        </div>
+        <br />
+        <br />
+        <button th:if="${#authentication.name == post.user.username}" class="show-post-edit-form">Edit</button>
+        <button th:if="${#authentication.name == post.user.username}"  class="show-delete-confirmation">Delete</button>
+        <form action="#" th:action="@{/post/{postId}(postId=${post.id})}" th:method="put" th:object="${editPost}" class="edit-post hidden">
+            <h3>Edit</h3>
+            <input type="text" placeholder="Hello world!..." th:field="*{content}"/> <span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error"/>
+            <input type="submit" value="Edit"/>
+        </form>
+        <hr />
+        Comments: <span th:text="${#lists.size(post.comments)}"/>
+    </div>
+
+    <script th:src="@{/javascript/post.js}"></script>
+</body>
+</html>

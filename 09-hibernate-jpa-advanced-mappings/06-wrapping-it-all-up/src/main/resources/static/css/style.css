@@ -11,3 +11,8 @@
 .hidden {
     display: none;
 }
+
+a {
+    color: black;
+    text-decoration: none;
+}

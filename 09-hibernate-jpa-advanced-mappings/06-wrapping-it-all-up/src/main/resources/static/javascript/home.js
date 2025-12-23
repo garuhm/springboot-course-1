@@ -1,4 +1,5 @@
 const showPostFormBtn = document.querySelector(".show-post-form")
+
 showPostFormBtn.addEventListener("click", (e) => {
     e.preventDefault()
 

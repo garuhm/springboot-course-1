@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>Home</h1>
+    <h1>Xitter</h1>
     <hr/>
     <form action="#" th:action="@{/logout}" method="POST">
         Welcome, <span th:text="${user.displayName}"/>
@@ -23,10 +23,17 @@
     </form>
     <div class="posts">
         <div th:each="post : ${timeline}">
-            Poster: <span th:text="${post.user.displayName}"/> (@<span th:text="${post.user.username}"/>)
-            <p th:text="${post.content}"/>
-            Likes: <span th:text="${post.likes}"/>
-            <hr />
+            <a class="post-content" th:href="@{/post/{postId}(postId=${post.id})}">
+                <div class="post">
+                    Poster: <span th:text="${post.user.displayName}"/> (@<span th:text="${post.user.username}"/>)
+                    <p th:text="${post.content}"/>
+                    Likes: <span th:text="${post.likes}"/>
+                    <br/>
+                    <br/>
+                    Comments: <span th:text="${#lists.size(post.comments)}"/>
+                    <hr />
+                </div>
+            </a>
         </div>
     </div>
 

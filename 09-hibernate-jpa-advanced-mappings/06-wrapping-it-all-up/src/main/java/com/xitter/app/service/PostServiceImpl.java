@@ -40,12 +40,14 @@ public class PostServiceImpl implements PostService{
     public void createPost(WebPost webPost) {
         Post post = new Post(userDAO.findUserByName(webPost.getUsername()), webPost.getContent());
         post.setComments(new ArrayList<>());
+        userDAO.findUserByName(webPost.getUsername()).addPost(post);
         postDAO.createPost(post);
     }
 
     @Override
     public void updatePost(WebPost webPost) {
         Post post = findPostById(webPost.getId());
+        post.setContent(webPost.getContent());
         postDAO.updatePost(post);
     }
 

@@ -32,8 +32,6 @@ public class Comment {
         this.content = content;
         likes = 0;
 
-        user.addComment(this);
-        post.addComment(this);
     }
 
     public int getId() {

@@ -13,7 +13,7 @@ public class Post {
     @Column(name="id")
     private int id;
 
-    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name="user")
     private User user ;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "post", cascade = {CascadeType.REMOVE, CascadeType.REFRESH})
@@ -33,8 +33,6 @@ public class Post {
         this.user = user;
         this.content = content;
         likes = 0;
-
-        user.addPost(this);
     }
 
     public void addComment(Comment comment){

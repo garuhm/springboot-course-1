@@ -29,12 +29,12 @@ public class User {
     private boolean enabled;
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     private List<Post> posts;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade ={CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     private List<Comment> comments;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinTable(
             name = "follower_following",
             joinColumns = @JoinColumn(name = "follower_id"),

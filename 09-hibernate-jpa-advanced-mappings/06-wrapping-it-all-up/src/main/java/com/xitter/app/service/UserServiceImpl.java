@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
     public void save(WebUser webUser){
         User user = new User(webUser.getUsername(), webUser.getDisplayName(), passwordEncoder.encode(webUser.getPassword()), true);
         user.setComments(new ArrayList<>());
-        user.setComments(new ArrayList<>());
+        user.setPosts(new ArrayList<>());
         user.setFollowers(new HashSet<>());
         user.setFollowing(new HashSet<>());
 
