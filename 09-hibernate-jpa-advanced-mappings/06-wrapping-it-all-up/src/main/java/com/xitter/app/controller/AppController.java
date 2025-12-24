@@ -1,5 +1,6 @@
 package com.xitter.app.controller;
 
+import com.xitter.app.entity.Post;
 import com.xitter.app.entity.User;
 import com.xitter.app.model.WebPost;
 import com.xitter.app.service.PostService;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class AppController {
@@ -26,7 +28,6 @@ public class AppController {
 
     @GetMapping("/home")
     public String home(Model model, Principal principal){
-        System.out.println(principal.getName());
         model.addAttribute("user", userService.findByUsername(principal.getName()));
         model.addAttribute("timeline", postService.findAllPosts());
         model.addAttribute("createPost", new WebPost());
@@ -56,11 +57,30 @@ public class AppController {
     @PutMapping("/post/{postId}")
     public String updatePost(@PathVariable("postId") int postID, @Valid @ModelAttribute("editPost") WebPost webPost, BindingResult result, Principal principal){
         if(result.hasErrors() || !postService.findPostById(postID).getUser().getUsername().equals(principal.getName())){
-            return "home";
+            return "redirect:/home";
         }
         webPost.setId(postID);
         webPost.setUsername(principal.getName());
         postService.updatePost(webPost);
         return "redirect:/post/" + postID;
+    }
+
+    @DeleteMapping("/post/{postId}")
+    public String deletePost(@PathVariable("postId") int postID, Principal principal){
+        if(!postService.findPostById(postID).getUser().getUsername().equals(principal.getName())){
+            return "redirect:/post/" + postID;
+        }
+        postService.deletePostById(postID);
+        return "redirect:/home";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("query")String query, Model model, Principal principal){
+        model.addAttribute("posts", postService.findByQuery(query));
+        model.addAttribute("users", userService.findByQuery(query));
+
+        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        model.addAttribute("createPost", new WebPost());
+        return "search";
     }
 }

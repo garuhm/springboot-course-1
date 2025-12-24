@@ -6,7 +6,9 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-    <h1>Xitter</h1>
+    <a th:href="@{/home}">
+        <h1>Xitter</h1>
+    </a>
     <form action="#" method="GET" th:action="@{/search}">
         <input type="text" placeholder="Search" name="query"/>
         <input type="submit" value="Search"/>
@@ -25,8 +27,13 @@
         <input type="submit" value="Post"/>
         <hr/>
     </form>
+    <div class="options">
+        <div class="posts-toggle active">Posts</div>
+        <div class="users-toggle">Users</div>
+    </div>
+    <hr/>
     <div class="posts">
-        <div th:each="post : ${timeline}">
+        <div th:each="post : ${posts}">
             <a class="post-content" th:href="@{/post/{postId}(postId=${post.id})}">
                 <div class="post">
                     Poster: <span th:text="${post.user.displayName}"/> (@<span th:text="${post.user.username}"/>)
@@ -40,7 +47,24 @@
             </a>
         </div>
     </div>
+    <div class="users hidden">
+        <div th:each="user : ${users}">
+            <a class="user-card" th:href="@{/user/{username}(username=${user.username})}">
+                <div class="post">
+                    <span th:text="${user.displayName}"/> (@<span th:text="${user.username}"/>)
+                    <br/>
+                    <br/>
+                    Followers: <span th:text="${#lists.size(user.followers)}"/>
+                    <br/>
+                    <br/>
+                    Following: <span th:text="${#lists.size(user.following)}"/>
+                    <hr />
+                </div>
+            </a>
+        </div>
+    </div>
 
     <script th:src="@{/javascript/home.js}"></script>
+    <script th:src="@{/javascript/search.js}"></script>
 </body>
 </html>

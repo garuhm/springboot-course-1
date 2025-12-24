@@ -7,6 +7,7 @@ import java.util.List;
 public interface PostDAO {
     List<Post> findAllPosts();
     List<Post> findPostsByUsername(String username);
+    List<Post> findByQuery(String query);
 
     Post findPostById(int id);
 

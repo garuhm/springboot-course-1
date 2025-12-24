@@ -16,7 +16,7 @@ public class Post {
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name="user")
     private User user ;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post", cascade = {CascadeType.REMOVE, CascadeType.REFRESH})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @Column(name="content")
@@ -40,6 +40,16 @@ public class Post {
             comments = new ArrayList<>();
         }
         comments.add(comment);
+    }
+
+    public void removeComment(Comment comment){
+        comments.remove(comment);
+    }
+
+    public void disconnectCommentsFromUsers() {
+        for(Comment comment : comments){
+            comment.getUser().removeComment(comment);
+        }
     }
 
     public String getContent() {

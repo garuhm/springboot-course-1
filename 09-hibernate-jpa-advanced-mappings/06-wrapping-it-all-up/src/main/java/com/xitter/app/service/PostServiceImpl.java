@@ -32,6 +32,11 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
+    public List<Post> findByQuery(String query) {
+        return postDAO.findByQuery(query);
+    }
+
+    @Override
     public Post findPostById(int id) {
         return postDAO.findPostById(id);
     }

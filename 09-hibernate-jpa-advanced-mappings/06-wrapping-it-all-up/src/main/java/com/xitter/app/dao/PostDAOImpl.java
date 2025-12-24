@@ -45,6 +45,19 @@ public class PostDAOImpl implements PostDAO{
     }
 
     @Override
+    public List<Post> findByQuery(String queryTerm){
+        TypedQuery<Post> query = entityManager.createQuery("SELECT p FROM Post p where p.content LIKE :query", Post.class);
+        query.setParameter("query", "%" + queryTerm + "%");
+        List<Post> result = null;
+        try {
+            result = query.getResultList();
+        } catch (Exception e) {
+            result = new ArrayList<>();
+        }
+        return result;
+    }
+
+    @Override
     public Post findPostById(int id) {
         return entityManager.find(Post.class, id);
     }
@@ -64,6 +77,9 @@ public class PostDAOImpl implements PostDAO{
     @Override
     @Transactional
     public void deletePostById(int id) {
-        entityManager.remove(findPostById(id));
+        Post post = entityManager.find(Post.class, id);
+        post.getUser().removePost(post);
+        post.disconnectCommentsFromUsers();
+        entityManager.remove(post);
     }
 }

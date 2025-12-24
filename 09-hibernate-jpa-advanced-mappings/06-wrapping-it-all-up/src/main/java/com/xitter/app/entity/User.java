@@ -29,9 +29,9 @@ public class User {
     private boolean enabled;
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Post> posts;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
@@ -84,11 +84,29 @@ public class User {
         posts.add(post);
     }
 
+    public void removePost(Post post){
+        posts.remove(post);
+    }
+
     public void addComment(Comment comment){
         if(comments == null){
             comments = new ArrayList<>();
         }
         comments.add(comment);
+    }
+
+    public void removeComment(Comment comment){
+        comments.remove(comment);
+    }
+
+    public void disconnectCommentsOnPostsFromUsers(){
+        for(Post post : posts){
+            for(Comment comment : post.getComments()){
+                if(!comment.getUser().equals(this)){
+                    comment.getUser().getComments().remove(comment);
+                }
+            }
+        }
     }
 
     public String getUsername() {

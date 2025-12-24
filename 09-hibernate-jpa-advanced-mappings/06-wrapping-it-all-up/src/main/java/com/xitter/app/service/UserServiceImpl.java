@@ -2,6 +2,7 @@ package com.xitter.app.service;
 
 import com.xitter.app.dao.RoleDAO;
 import com.xitter.app.dao.UserDAO;
+import com.xitter.app.entity.Post;
 import com.xitter.app.entity.Role;
 import com.xitter.app.entity.User;
 import com.xitter.app.model.WebUser;
@@ -13,10 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByUsername(String username) {
         return userDAO.findUserByName(username);
+    }
+
+    @Override
+    public List<User> findByQuery(String query) {
+        return userDAO.findByQuery(query);
     }
 
     @Override
