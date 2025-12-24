@@ -34,7 +34,7 @@
     <hr/>
     <div class="posts">
         <div th:each="post : ${posts}">
-            <a class="post-content" th:href="@{/post/{postId}(postId=${post.postId})}">
+            <a class="post-content" th:href="@{/post/{postId}(postId=${post.id})}">
                 <div class="post">
                     Poster: <span th:text="${post.user.displayName}"/> (@<span th:text="${post.user.username}"/>)
                     <p th:text="${post.content}"/>

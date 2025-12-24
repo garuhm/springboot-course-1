@@ -112,4 +112,13 @@ public class AppController {
         commentService.updateComment(webComment);
         return "redirect:/post/" + postID;
     }
+
+    @DeleteMapping("/post/{postId}/comment/{commentId}")
+    public String deletePost(@PathVariable("postId") int postID, @PathVariable("commentId") int commentId, Principal principal){
+        if(!commentService.findCommentById(commentId).getUser().getUsername().equals(principal.getName())){
+            return "redirect:/post/" + postID;
+        }
+        commentService.deleteCommentById(commentId);
+        return "redirect:/post/" + postID;
+    }
 }
