@@ -26,7 +26,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(User user, Post post, String content, int likes) {
+    public Comment(User user, Post post, String content) {
         this.user = user;
         this.post = post;
         this.content = content;
@@ -64,6 +64,14 @@ public class Comment {
 
     public void setLikes(int likes) {
         this.likes = likes;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override
