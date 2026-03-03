@@ -24,6 +24,7 @@ public class Application {
 
     private void demoTheBeforeAdvice(AccountDAO accountDAO, MembershipDAO membershipDAO) {
         accountDAO.addAccount();
+        accountDAO.setName("yeah");
         membershipDAO.addAccount("s");
     }
 

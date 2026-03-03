@@ -11,12 +11,21 @@ public class LoggingAspect {
     @Pointcut("execution(public void com.springboot.aoppractice.dao.*.*(..))")
     private void forDaoPackage(){};
 
-    @Before("forDaoPackage()")
+    @Pointcut("execution(public void com.springboot.aoppractice.dao.*.get*(..))")
+    private void getters(){};
+
+    @Pointcut("execution(public void com.springboot.aoppractice.dao.*.set*(..))")
+    private void setters(){};
+
+    @Pointcut("forDaoPackage() && !(getters() || setters())")
+    private void forDaoPackageNoGetSet(){};
+
+    @Before("forDaoPackageNoGetSet()")
     public void beforeAddAccount(){
         System.out.println("## LOGGING: before advice for addAccount()");
     }
 
-    @Before("forDaoPackage()")
+    @Before("forDaoPackageNoGetSet()")
     public void performAPIAnalaytics(){
         System.out.println("## ANALYTICS: analyzing api analytics");
     }
