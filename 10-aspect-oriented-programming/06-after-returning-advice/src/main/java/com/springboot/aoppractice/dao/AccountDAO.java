@@ -2,9 +2,9 @@ package com.springboot.aoppractice.dao;
 
 import com.springboot.aoppractice.entity.Account;
 
+import java.util.List;
+
 public interface AccountDAO {
     void addAccount(Account account);
-     String getName();
-
-     void setName(String name);
+     List<Account> findAccounts();
 }

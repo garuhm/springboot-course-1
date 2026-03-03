@@ -25,6 +25,9 @@ public class Account {
         this.level = level;
     }
 
+    public Account() {
+    }
+
     @Override
     public String toString() {
         return "Account{" +

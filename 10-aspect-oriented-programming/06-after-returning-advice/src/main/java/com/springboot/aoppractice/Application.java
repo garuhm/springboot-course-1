@@ -19,14 +19,16 @@ public class Application {
     @Bean
     public CommandLineRunner commandLineRunner(AccountDAO accountDAO, MembershipDAO membershipDAO){
         return runner -> {
-            demoTheBeforeAdvice(accountDAO, membershipDAO);
+            demoTheAdvice(accountDAO, membershipDAO);
         };
     }
 
-    private void demoTheBeforeAdvice(AccountDAO accountDAO, MembershipDAO membershipDAO) {
+    private void demoTheAdvice(AccountDAO accountDAO, MembershipDAO membershipDAO) {
         accountDAO.addAccount(new Account("gabe", "1"));
-        accountDAO.setName("yeah");
-        membershipDAO.addAccount(new Account("jackelyn", "1"));
+        System.out.println(accountDAO.findAccounts());
+//        accountDAO.setName("yeah");
+//        membershipDAO.addAccount(new Account("jackelyn", "1"));
+
     }
 
 }

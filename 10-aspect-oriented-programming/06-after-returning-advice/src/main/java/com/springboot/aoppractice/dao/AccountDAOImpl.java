@@ -1,23 +1,31 @@
 package com.springboot.aoppractice.dao;
 
 import com.springboot.aoppractice.entity.Account;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class AccountDAOImpl implements AccountDAO {
-    private String name;
+    private List<Account> accounts;
+
+    public AccountDAOImpl() {
+    }
+
+    @Autowired
+    public AccountDAOImpl(List<Account> accounts) {
+        this.accounts = accounts;
+    }
 
     @Override
     public void addAccount(Account account) {
         System.out.println("---adding acct operations---");
+        accounts.add(account);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        System.out.println("---setting acct name operations---");
+    @Override
+    public List<Account> findAccounts() {
+        return accounts;
     }
 }
