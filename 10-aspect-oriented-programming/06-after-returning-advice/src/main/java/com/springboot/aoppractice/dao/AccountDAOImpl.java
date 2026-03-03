@@ -26,6 +26,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<Account> findAccounts() {
+        System.out.println("--listing acct operations--");
         return accounts;
     }
 }

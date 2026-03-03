@@ -25,7 +25,7 @@ public class LoggingAspect {
         }
     }
 
-    @AfterReturning(pointcut = "com.springboot.aoppractice.aspect.AOPExpressions.forDaoPackageNoGetSet()", returning = "result")
+    @AfterReturning(pointcut = "com.springboot.aoppractice.aspect.AOPExpressions.forDaoPackageWithReturnNoGetSet()", returning = "result")
     public void afterMethodReturnLogging(JoinPoint joinPoint, List<Account> result){
         System.out.println("## LOGGING: method call for " + joinPoint.getSignature().toShortString() + " was successful");
         System.out.println("# result: " + result);

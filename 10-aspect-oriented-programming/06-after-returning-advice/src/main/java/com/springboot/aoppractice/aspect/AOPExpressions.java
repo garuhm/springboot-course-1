@@ -8,6 +8,9 @@ public class AOPExpressions {
     @Pointcut("execution(public * com.springboot.aoppractice.dao.*.*(..))")
     public void forDaoPackage(){};
 
+    @Pointcut("execution(void com.springboot.aoppractice..*(..))")
+    public void forVoidMethods(){};
+
     @Pointcut("execution(* com.springboot.aoppractice.dao.*.get*(..))")
     public void getters(){};
 
@@ -16,4 +19,7 @@ public class AOPExpressions {
 
     @Pointcut("forDaoPackage() && !(getters() || setters())")
     public void forDaoPackageNoGetSet(){};
+
+    @Pointcut("forDaoPackage() && !(getters() || setters()) && !forVoidMethods()")
+    public void forDaoPackageWithReturnNoGetSet(){};
 }
