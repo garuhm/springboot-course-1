@@ -2,6 +2,7 @@ package com.springboot.aoppractice;
 
 import com.springboot.aoppractice.dao.AccountDAO;
 import com.springboot.aoppractice.dao.AccountDAOImpl;
+import com.springboot.aoppractice.dao.MembershipDAO;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,14 +16,15 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(AccountDAO accountDAO){
+    public CommandLineRunner commandLineRunner(AccountDAO accountDAO, MembershipDAO membershipDAO){
         return runner -> {
-            demoTheBeforeAdvice(accountDAO);
+            demoTheBeforeAdvice(accountDAO, membershipDAO);
         };
     }
 
-    private void demoTheBeforeAdvice(AccountDAO accountDAO) {
+    private void demoTheBeforeAdvice(AccountDAO accountDAO, MembershipDAO membershipDAO) {
         accountDAO.addAccount();
+        membershipDAO.addAccount();
     }
 
 }
