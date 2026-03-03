@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-@Order(2)
-public class LoggingAspect {
+@Order(1)
+public class CloudLoggingAspect {
     @Before("com.springboot.aoppractice.aspect.AOPExpressions.forDaoPackageNoGetSet()")
-    public void beforeMethodLogging(){
-        System.out.println("## LOGGING: before advice for dao");
+    public void beforeMethodCloudLogging(){
+        System.out.println("## CLOUD LOGGING: before advice for dao");
     }
 }
