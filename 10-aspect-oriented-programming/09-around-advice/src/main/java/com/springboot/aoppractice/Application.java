@@ -4,6 +4,7 @@ import com.springboot.aoppractice.dao.AccountDAO;
 import com.springboot.aoppractice.dao.AccountDAOImpl;
 import com.springboot.aoppractice.dao.MembershipDAO;
 import com.springboot.aoppractice.entity.Account;
+import com.springboot.aoppractice.service.TrafficFortuneService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,25 +20,26 @@ public class Application {
     }
 
     @Bean
-    public CommandLineRunner commandLineRunner(AccountDAO accountDAO, MembershipDAO membershipDAO){
+    public CommandLineRunner commandLineRunner(TrafficFortuneService trafficFortuneService){
         return runner -> {
-            demoTheAdvice(accountDAO);
+            demoTheAdvice(trafficFortuneService);
         };
     }
 
-    private void demoTheAdvice(AccountDAO accountDAO) {
-        List<Account> accountList = null;
-
-        try{
-            boolean tripWire = false;
-            accountDAO.addAccount(new Account("gabe", "1"));
-            System.out.println("\n");
-            accountList = accountDAO.findAccounts(tripWire);
-        }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-        }
-        System.out.println(accountList);
+    private void demoTheAdvice(TrafficFortuneService trafficFortuneService) {
+        System.out.println(trafficFortuneService.getFortune());
+//        List<Account> accountList = null;
+//
+//        try{
+//            boolean tripWire = false;
+//            accountDAO.addAccount(new Account("gabe", "1"));
+//            System.out.println("\n");
+//            accountList = accountDAO.findAccounts(tripWire);
+//        }
+//        catch(Exception e){
+//            System.out.println(e.getMessage());
+//        }
+//        System.out.println(accountList);
 //        accountDAO.setName("yeah");
 //        membershipDAO.addAccount(new Account("jackelyn", "1"));
 
