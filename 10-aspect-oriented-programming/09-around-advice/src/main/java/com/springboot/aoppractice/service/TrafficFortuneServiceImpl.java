@@ -15,6 +15,6 @@ public class TrafficFortuneServiceImpl implements TrafficFortuneService {
             System.out.println(e);
         }
 
-        return "it's your lucky day";
+        return 0/0 + "";
     }
 }

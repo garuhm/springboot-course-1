@@ -29,11 +29,11 @@ public class LoggingAspect {
         System.out.println("# result: " + result);
     }
 //
-    @AfterThrowing(pointcut = "com.springboot.aoppractice.aspect.AOPExpressions.forAopPackage()", throwing = "exc")
-    public void afterMethodExceptionLogging(JoinPoint joinPoint, Throwable exc){
-        System.out.println("## LOGGING: method call for " + joinPoint.getSignature().toShortString() + " failed, exception");
-        System.out.println("# exception: " + exc.getClass().getName() + " - " + exc.getMessage());
-    }
+//    @AfterThrowing(pointcut = "com.springboot.aoppractice.aspect.AOPExpressions.forAopPackage()", throwing = "exc")
+//    public void afterMethodExceptionLogging(JoinPoint joinPoint, Throwable exc){
+//        System.out.println("## LOGGING: method call for " + joinPoint.getSignature().toShortString() + " failed, exception");
+//        System.out.println("# exception: " + exc.getClass().getName() + " - " + exc.getMessage());
+//    }
 
     @After("com.springboot.aoppractice.aspect.AOPExpressions.forAopPackage()")
     public void afterMethodLogging(JoinPoint joinPoint){
@@ -42,13 +42,20 @@ public class LoggingAspect {
 
     @Around("com.springboot.aoppractice.aspect.AOPExpressions.forAopPackage()")
     public Object aroundAdviceLogging(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
-        long start = System.currentTimeMillis();
-        Object result = proceedingJoinPoint.proceed();
+        long start = System.nanoTime();
+            Object result = null;
 
-        long end = System.currentTimeMillis();
+        try{
+            result = proceedingJoinPoint.proceed();
+        } catch(Exception e){
+            System.out.println("## LOGGING: method call for " + proceedingJoinPoint.getSignature().toShortString() + " failed");
+            System.out.println("# exception: " + e.getClass().getName() + " - " + e.getMessage());
+        }
+
+        long end = System.nanoTime();
         long duration = end - start;
 
-        System.out.println("## LOGGING: time it took to execute " +  proceedingJoinPoint.getSignature() + ": " + duration / 1000 + " sec");
+        System.out.println("## LOGGING: time it took to execute " +  proceedingJoinPoint.getSignature() + ": " + duration / 10000000 + " ms");
         return result;
     }
 }
