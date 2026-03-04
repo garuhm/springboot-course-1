@@ -33,4 +33,9 @@ public class LoggingAspect {
         System.out.println("## LOGGING: method call for " + joinPoint.getSignature().toShortString() + " failed, exception");
         System.out.println("# exception: " + exc.getClass().getName() + " - " + exc.getMessage());
     }
+
+    @After("com.springboot.aoppractice.aspect.AOPExpressions.forDaoPackage()")
+    public void afterMethodLogging(JoinPoint joinPoint){
+        System.out.println("## LOGGING: method call for " + joinPoint.getSignature().toShortString() + " concluded");
+    }
 }

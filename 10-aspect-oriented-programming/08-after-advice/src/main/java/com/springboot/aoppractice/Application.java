@@ -29,8 +29,9 @@ public class Application {
         List<Account> accountList = null;
 
         try{
-            boolean tripWire = true;
+            boolean tripWire = false;
             accountDAO.addAccount(new Account("gabe", "1"));
+            System.out.println("\n");
             accountList = accountDAO.findAccounts(tripWire);
         }
         catch(Exception e){
