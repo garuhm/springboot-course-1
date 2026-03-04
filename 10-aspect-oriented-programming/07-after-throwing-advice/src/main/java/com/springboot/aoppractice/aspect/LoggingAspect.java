@@ -2,10 +2,7 @@ package com.springboot.aoppractice.aspect;
 
 import com.springboot.aoppractice.entity.Account;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -29,5 +26,11 @@ public class LoggingAspect {
     public void afterMethodReturnLogging(JoinPoint joinPoint, List<Account> result){
         System.out.println("## LOGGING: method call for " + joinPoint.getSignature().toShortString() + " was successful");
         System.out.println("# result: " + result);
+    }
+
+    @AfterThrowing(pointcut = "com.springboot.aoppractice.aspect.AOPExpressions.forDaoPackage()", throwing = "exc")
+    public void afterMethodExceptionLogging(JoinPoint joinPoint, Throwable exc){
+        System.out.println("## LOGGING: method call for " + joinPoint.getSignature().toShortString() + " failed, exception");
+        System.out.println("# exception: " + exc.getClass().getName() + " - " + exc.getMessage());
     }
 }

@@ -9,6 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class Application {
 
@@ -19,13 +21,22 @@ public class Application {
     @Bean
     public CommandLineRunner commandLineRunner(AccountDAO accountDAO, MembershipDAO membershipDAO){
         return runner -> {
-            demoTheAdvice(accountDAO, membershipDAO);
+            demoTheAdvice(accountDAO);
         };
     }
 
-    private void demoTheAdvice(AccountDAO accountDAO, MembershipDAO membershipDAO) {
-        accountDAO.addAccount(new Account("gabe", "1"));
-        System.out.println(accountDAO.findAccounts());
+    private void demoTheAdvice(AccountDAO accountDAO) {
+        List<Account> accountList = null;
+
+        try{
+            boolean tripWire = true;
+            accountDAO.addAccount(new Account("gabe", "1"));
+            accountList = accountDAO.findAccounts(tripWire);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println(accountList);
 //        accountDAO.setName("yeah");
 //        membershipDAO.addAccount(new Account("jackelyn", "1"));
 
